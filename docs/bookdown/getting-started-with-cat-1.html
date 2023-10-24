@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 2 Getting Started with CAT | CAT: A toolkit for downstream analysis of bulk ATAC-seq data</title>
+  <meta name="description" content="A Chromatin Accessibility Toolkit for analysis ATAC-seq data (CAT)." />
+  <meta name="generator" content="bookdown 0.34 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 2 Getting Started with CAT | CAT: A toolkit for downstream analysis of bulk ATAC-seq data" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="A Chromatin Accessibility Toolkit for analysis ATAC-seq data (CAT)." />
+  <meta name="github-repo" content="rstudio/bookdown-demo" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 2 Getting Started with CAT | CAT: A toolkit for downstream analysis of bulk ATAC-seq data" />
+  
+  <meta name="twitter:description" content="A Chromatin Accessibility Toolkit for analysis ATAC-seq data (CAT)." />
+  
+
+<meta name="author" content="Tao Zhu" />
+
+
+<meta name="date" content="2023-08-05" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="index.html"/>
+<link rel="next" href="snakemake-pipeline.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">A Minimal Book Example</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Getting Started with CAT</a></li>
+<li class="chapter" data-level="2" data-path="getting-started-with-cat-1.html"><a href="getting-started-with-cat-1.html"><i class="fa fa-check"></i><b>2</b> Getting Started with CAT</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="getting-started-with-cat-1.html"><a href="getting-started-with-cat-1.html#why-use-cat"><i class="fa fa-check"></i><b>2.1</b> Why use CAT?</a></li>
+<li class="chapter" data-level="2.2" data-path="getting-started-with-cat-1.html"><a href="getting-started-with-cat-1.html#getting-set-up"><i class="fa fa-check"></i><b>2.2</b> Getting Set Up</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="snakemake-pipeline.html"><a href="snakemake-pipeline.html"><i class="fa fa-check"></i><b>3</b> Snakemake Pipeline</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="snakemake-pipeline.html"><a href="snakemake-pipeline.html#example-data"><i class="fa fa-check"></i><b>3.1</b> Example data</a></li>
+<li class="chapter" data-level="3.2" data-path="snakemake-pipeline.html"><a href="snakemake-pipeline.html#input-data-format"><i class="fa fa-check"></i><b>3.2</b> Input data format</a></li>
+<li class="chapter" data-level="3.3" data-path="snakemake-pipeline.html"><a href="snakemake-pipeline.html#paparing-your-config-file"><i class="fa fa-check"></i><b>3.3</b> Paparing your config file</a></li>
+<li class="chapter" data-level="3.4" data-path="snakemake-pipeline.html"><a href="snakemake-pipeline.html#report-explainison"><i class="fa fa-check"></i><b>3.4</b> Report explainison</a></li>
+<li class="chapter" data-level="3.5" data-path="snakemake-pipeline.html"><a href="snakemake-pipeline.html#data-quality-control-assement"><i class="fa fa-check"></i><b>3.5</b> Data Quality Control assement</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="quality-control-plot.html"><a href="quality-control-plot.html"><i class="fa fa-check"></i><b>4</b> Quality Control Plot</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="quality-control-plot.html"><a href="quality-control-plot.html#plotfragments"><i class="fa fa-check"></i><b>4.1</b> plotFragments</a></li>
+<li class="chapter" data-level="4.2" data-path="quality-control-plot.html"><a href="quality-control-plot.html#plottss"><i class="fa fa-check"></i><b>4.2</b> plotTSS</a></li>
+<li class="chapter" data-level="4.3" data-path="quality-control-plot.html"><a href="quality-control-plot.html#quantification"><i class="fa fa-check"></i><b>4.3</b> Quantification</a></li>
+<li class="chapter" data-level="4.4" data-path="quality-control-plot.html"><a href="quality-control-plot.html#pca"><i class="fa fa-check"></i><b>4.4</b> PCA</a></li>
+<li class="chapter" data-level="4.5" data-path="quality-control-plot.html"><a href="quality-control-plot.html#dendrogram"><i class="fa fa-check"></i><b>4.5</b> Dendrogram</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="peak-overlap-analysis.html"><a href="peak-overlap-analysis.html"><i class="fa fa-check"></i><b>5</b> Peak Overlap Analysis</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="peak-overlap-analysis.html"><a href="peak-overlap-analysis.html#plotvenn2---6-samples"><i class="fa fa-check"></i><b>5.1</b> PlotVenn(2 - 6 samples)</a></li>
+<li class="chapter" data-level="5.2" data-path="peak-overlap-analysis.html"><a href="peak-overlap-analysis.html#plotupset"><i class="fa fa-check"></i><b>5.2</b> plotUpSet</a></li>
+<li class="chapter" data-level="5.3" data-path="peak-overlap-analysis.html"><a href="peak-overlap-analysis.html#pairwise-module-examples"><i class="fa fa-check"></i><b>5.3</b> Pairwise module examples</a></li>
+<li class="chapter" data-level="5.4" data-path="peak-overlap-analysis.html"><a href="peak-overlap-analysis.html#flower-plot"><i class="fa fa-check"></i><b>5.4</b> Flower plot</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="peak-annotaion.html"><a href="peak-annotaion.html"><i class="fa fa-check"></i><b>6</b> Peak annotaion</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="peak-annotaion.html"><a href="peak-annotaion.html#chipseeker-annotation"><i class="fa fa-check"></i><b>6.1</b> ChIPSeeker annotation</a></li>
+<li class="chapter" data-level="6.2" data-path="peak-annotaion.html"><a href="peak-annotaion.html#the-distance-of-peak-summit-to-tss"><i class="fa fa-check"></i><b>6.2</b> The distance of Peak summit to TSS</a></li>
+<li class="chapter" data-level="6.3" data-path="peak-annotaion.html"><a href="peak-annotaion.html#proximal-distal-intragenic-annotaion"><i class="fa fa-check"></i><b>6.3</b> Proximal / Distal / Intragenic Annotaion</a></li>
+<li class="chapter" data-level="6.4" data-path="peak-annotaion.html"><a href="peak-annotaion.html#annotation-for-merged-peaks"><i class="fa fa-check"></i><b>6.4</b> Annotation for merged peaks</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="differential-ocr-analysis.html"><a href="differential-ocr-analysis.html"><i class="fa fa-check"></i><b>7</b> Differential OCR analysis</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="differential-ocr-analysis.html"><a href="differential-ocr-analysis.html#using-deseq2-to-identify-differentail-ocr-two-groups"><i class="fa fa-check"></i><b>7.1</b> Using DEseq2 to identify differentail OCR (Two groups)</a></li>
+<li class="chapter" data-level="7.2" data-path="differential-ocr-analysis.html"><a href="differential-ocr-analysis.html#get-the-differential-peaks-target-genes"><i class="fa fa-check"></i><b>7.2</b> Get the differential peaks target genes</a></li>
+<li class="chapter" data-level="7.3" data-path="differential-ocr-analysis.html"><a href="differential-ocr-analysis.html#plotma"><i class="fa fa-check"></i><b>7.3</b> PlotMA</a></li>
+<li class="chapter" data-level="7.4" data-path="differential-ocr-analysis.html"><a href="differential-ocr-analysis.html#compare-the-three-samples-chromatin-accessibility-three-samples"><i class="fa fa-check"></i><b>7.4</b> Compare the three samples chromatin accessibility (Three samples)</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="tissuesample-specific-analysis.html"><a href="tissuesample-specific-analysis.html"><i class="fa fa-check"></i><b>8</b> Tissue(Sample) Specific Analysis</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="tissuesample-specific-analysis.html"><a href="tissuesample-specific-analysis.html#calaluate-the-spm-matrix"><i class="fa fa-check"></i><b>8.1</b> Calaluate the SPM matrix</a></li>
+<li class="chapter" data-level="8.2" data-path="tissuesample-specific-analysis.html"><a href="tissuesample-specific-analysis.html#select-the-specific-peak-with-your-interests"><i class="fa fa-check"></i><b>8.2</b> Select the specific peak with your interests</a></li>
+<li class="chapter" data-level="8.3" data-path="tissuesample-specific-analysis.html"><a href="tissuesample-specific-analysis.html#select-the-specifc-peaks-with-jsd-score"><i class="fa fa-check"></i><b>8.3</b> Select the specifc peaks with JSD score</a></li>
+<li class="chapter" data-level="8.4" data-path="tissuesample-specific-analysis.html"><a href="tissuesample-specific-analysis.html#get-the-top-n-specific-peaks-in-every-samples-tissues"><i class="fa fa-check"></i><b>8.4</b> Get the Top N specific peaks in every Samples / Tissues</a></li>
+<li class="chapter" data-level="8.5" data-path="tissuesample-specific-analysis.html"><a href="tissuesample-specific-analysis.html#get-the-optimal-cluster-number"><i class="fa fa-check"></i><b>8.5</b> Get the optimal cluster number</a></li>
+<li class="chapter" data-level="8.6" data-path="tissuesample-specific-analysis.html"><a href="tissuesample-specific-analysis.html#get-the-cluster-target-genes"><i class="fa fa-check"></i><b>8.6</b> Get the cluster target genes</a></li>
+<li class="chapter" data-level="8.7" data-path="tissuesample-specific-analysis.html"><a href="tissuesample-specific-analysis.html#go-enrichment"><i class="fa fa-check"></i><b>8.7</b> GO Enrichment</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="process-the-time-series-data.html"><a href="process-the-time-series-data.html"><i class="fa fa-check"></i><b>9</b> Process the time series data</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="process-the-time-series-data.html"><a href="process-the-time-series-data.html#fitting-time-with-atac-seq"><i class="fa fa-check"></i><b>9.1</b> Fitting time with ATAC-seq</a></li>
+<li class="chapter" data-level="9.2" data-path="process-the-time-series-data.html"><a href="process-the-time-series-data.html#integration-with-rna-seq"><i class="fa fa-check"></i><b>9.2</b> Integration with RNA-seq</a></li>
+<li class="chapter" data-level="9.3" data-path="process-the-time-series-data.html"><a href="process-the-time-series-data.html#get-fitting-time-genes"><i class="fa fa-check"></i><b>9.3</b> Get fitting time genes</a></li>
+<li class="chapter" data-level="9.4" data-path="process-the-time-series-data.html"><a href="process-the-time-series-data.html#integration-with-atac-rna-seq"><i class="fa fa-check"></i><b>9.4</b> Integration with ATAC / RNA-seq</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="motif-enrichment.html"><a href="motif-enrichment.html"><i class="fa fa-check"></i><b>10</b> Motif Enrichment</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="motif-enrichment.html"><a href="motif-enrichment.html#chromvar"><i class="fa fa-check"></i><b>10.1</b> ChromVAR</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="footprint-analysis.html"><a href="footprint-analysis.html"><i class="fa fa-check"></i><b>11</b> Footprint Analysis</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="footprint-analysis.html"><a href="footprint-analysis.html#get-the-footprint-score"><i class="fa fa-check"></i><b>11.1</b> Get the footprint score</a></li>
+<li class="chapter" data-level="11.2" data-path="footprint-analysis.html"><a href="footprint-analysis.html#plot-the-footprint-score"><i class="fa fa-check"></i><b>11.2</b> Plot the footprint score</a></li>
+<li class="chapter" data-level="11.3" data-path="footprint-analysis.html"><a href="footprint-analysis.html#compare-footprint"><i class="fa fa-check"></i><b>11.3</b> Compare Footprint</a></li>
+<li class="chapter" data-level="11.4" data-path="footprint-analysis.html"><a href="footprint-analysis.html#get-the-two-samples-differential-plot"><i class="fa fa-check"></i><b>11.4</b> Get the two samples differential plot</a></li>
+<li class="chapter" data-level="11.5" data-path="footprint-analysis.html"><a href="footprint-analysis.html#getmotif2gene"><i class="fa fa-check"></i><b>11.5</b> getMotif2Gene</a></li>
+<li class="chapter" data-level="11.6" data-path="footprint-analysis.html"><a href="footprint-analysis.html#integration-with-rna-seq-1"><i class="fa fa-check"></i><b>11.6</b> Integration with RNA-seq</a></li>
+<li class="chapter" data-level="11.7" data-path="footprint-analysis.html"><a href="footprint-analysis.html#footprint-depth-calaulation"><i class="fa fa-check"></i><b>11.7</b> Footprint depth calaulation</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="co-accessibility.html"><a href="co-accessibility.html"><i class="fa fa-check"></i><b>12</b> Co-accessibility</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="co-accessibility.html"><a href="co-accessibility.html#co-accessibility-calaulation"><i class="fa fa-check"></i><b>12.1</b> Co-accessibility calaulation</a></li>
+<li class="chapter" data-level="12.2" data-path="co-accessibility.html"><a href="co-accessibility.html#plotting-browser-tracks-of-co-accessibility"><i class="fa fa-check"></i><b>12.2</b> Plotting browser tracks of Co-accessibility</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="linking-peak-to-gene.html"><a href="linking-peak-to-gene.html"><i class="fa fa-check"></i><b>13</b> Linking Peak to Gene</a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="linking-peak-to-gene.html"><a href="linking-peak-to-gene.html#get-the-peak-target-genes"><i class="fa fa-check"></i><b>13.1</b> Get the peak target genes</a></li>
+<li class="chapter" data-level="13.2" data-path="linking-peak-to-gene.html"><a href="linking-peak-to-gene.html#plot-all-the-significant-peak2gene-links"><i class="fa fa-check"></i><b>13.2</b> Plot all the significant peak2gene links</a></li>
+<li class="chapter" data-level="13.3" data-path="linking-peak-to-gene.html"><a href="linking-peak-to-gene.html#link-ocr-to-genes"><i class="fa fa-check"></i><b>13.3</b> Link OCR to genes</a></li>
+<li class="chapter" data-level="13.4" data-path="linking-peak-to-gene.html"><a href="linking-peak-to-gene.html#plotp2gtracks"><i class="fa fa-check"></i><b>13.4</b> plotP2GTracks</a></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="building-regulatory-network.html"><a href="building-regulatory-network.html"><i class="fa fa-check"></i><b>14</b> Building regulatory network</a>
+<ul>
+<li class="chapter" data-level="14.1" data-path="building-regulatory-network.html"><a href="building-regulatory-network.html#motif2gene"><i class="fa fa-check"></i><b>14.1</b> Motif2Gene</a></li>
+<li class="chapter" data-level="14.2" data-path="building-regulatory-network.html"><a href="building-regulatory-network.html#building-regulatory-network-1"><i class="fa fa-check"></i><b>14.2</b> Building regulatory network</a></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="gwas-trait-snps-enrichment.html"><a href="gwas-trait-snps-enrichment.html"><i class="fa fa-check"></i><b>15</b> GWAS Trait SNPs Enrichment</a>
+<ul>
+<li class="chapter" data-level="15.1" data-path="gwas-trait-snps-enrichment.html"><a href="gwas-trait-snps-enrichment.html#workflows"><i class="fa fa-check"></i><b>15.1</b> Workflows</a></li>
+<li class="chapter" data-level="15.2" data-path="gwas-trait-snps-enrichment.html"><a href="gwas-trait-snps-enrichment.html#preprocessing"><i class="fa fa-check"></i><b>15.2</b> Preprocessing</a></li>
+<li class="chapter" data-level="15.3" data-path="gwas-trait-snps-enrichment.html"><a href="gwas-trait-snps-enrichment.html#do-enrichment"><i class="fa fa-check"></i><b>15.3</b> Do Enrichment</a></li>
+<li class="chapter" data-level="15.4" data-path="gwas-trait-snps-enrichment.html"><a href="gwas-trait-snps-enrichment.html#plotting"><i class="fa fa-check"></i><b>15.4</b> Plotting</a></li>
+</ul></li>
+<li class="chapter" data-level="16" data-path="session-information.html"><a href="session-information.html"><i class="fa fa-check"></i><b>16</b> Session Information</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">CAT: A toolkit for downstream analysis of bulk ATAC-seq data</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="getting-started-with-cat-1" class="section level1 hasAnchor" number="2">
+<h1><span class="header-section-number">Chapter 2</span> Getting Started with CAT<a href="getting-started-with-cat-1.html#getting-started-with-cat-1" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p><img src="CAT.png" width="20%" style="display: block; margin: auto;" /></p>
+<div id="why-use-cat" class="section level2 hasAnchor" number="2.1">
+<h2><span class="header-section-number">2.1</span> Why use CAT?<a href="getting-started-with-cat-1.html#why-use-cat" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>There are several ATAC-seq analysis tools available, so why use CAT? Currently these software focus more on QC/pre-processing of data, with little or no downstream analysis involved. Here, our CAT offers features not available in other tools, especially advanced downstream analysis. We also provide extensive data visualization capabilities.</p>
+<p><img src="cat_compare.png" width="90%" style="display: block; margin: auto;" /></p>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>Markmap</title>
+<style>
+* {
+  margin: 0;
+  padding: 0;
+}
+#mindmap {
+  display: block;
+  width: 100vw;
+  height: 100vh;
+}
+</style>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/markmap-toolbar@0.15.3/dist/style.css">
+</head>
+<body>
+<svg id="mindmap"></svg>
+<script src="https://cdn.jsdelivr.net/npm/d3@7.8.5/dist/d3.min.js"></script><script src="https://cdn.jsdelivr.net/npm/markmap-view@0.15.3/dist/browser/index.js"></script><script src="https://cdn.jsdelivr.net/npm/markmap-toolbar@0.15.3/dist/index.js"></script><script>(()=>{setTimeout(()=>{const{markmap:M,mm:ge}=window,me=new M.Toolbar;me.attach(ge);const fe=me.render();fe.setAttribute("style","position:absolute;bottom:20px;right:20px"),document.body.append(fe)})})()</script><script>((F,I,R,H)=>{const X=F();window.mm=X.Markmap.create("svg#mindmap",(I||X.deriveOptions)(H),R)})(()=>window.markmap,null,{"type":"heading","depth":0,"payload":{"lines":[1,2]},"content":"CAT","children":[{"type":"heading","depth":1,"payload":{"lines":[3,4]},"content":"Quality Control","children":[{"type":"list_item","depth":2,"payload":{"lines":[5,6]},"content":"plotFragments","children":[]},{"type":"list_item","depth":2,"payload":{"lines":[6,7]},"content":"plotTSS","children":[]},{"type":"list_item","depth":2,"payload":{"lines":[7,8]},"content":"plotPCA","children":[]},{"type":"list_item","depth":2,"payload":{"lines":[8,9]},"content":"plotDendrogram","children":[]}]},{"type":"heading","depth":1,"payload":{"lines":[10,11]},"content":"Peak Overlap Analysis","children":[{"type":"list_item","depth":2,"payload":{"lines":[12,13]},"content":"get_beds","children":[]},{"type":"list_item","depth":2,"payload":{"lines":[13,14]},"content":"get_combine_result","children":[]},{"type":"list_item","depth":2,"payload":{"lines":[14,15]},"content":"plotVenn","children":[]},{"type":"list_item","depth":2,"payload":{"lines":[15,16]},"content":"plotUpset","children":[]},{"type":"list_item","depth":2,"payload":{"lines":[16,17]},"content":"calPairwise","children":[]},{"type":"list_item","depth":2,"payload":{"lines":[17,18]},"content":"plotFlower","children":[]}]},{"type":"heading","depth":1,"payload":{"lines":[19,20]},"content":"Peak Annotation","children":[{"type":"list_item","depth":2,"payload":{"lines":[21,22]},"content":"annoPeaks","children":[]},{"type":"list_item","depth":2,"payload":{"lines":[22,23]},"content":"plotSummitDis","children":[]},{"type":"list_item","depth":2,"payload":{"lines":[23,24]},"content":"multiline","children":[]},{"type":"list_item","depth":2,"payload":{"lines":[24,25]},"content":"plotPDI","children":[]}]},{"type":"heading","depth":1,"payload":{"lines":[26,27]},"content":"Differential Analysis","children":[{"type":"list_item","depth":2,"payload":{"lines":[27,28]},"content":"quantification","children":[]},{"type":"list_item","depth":2,"payload":{"lines":[28,29]},"content":"getDiffPeak (Two Groups)","children":[]},{"type":"list_item","depth":2,"payload":{"lines":[29,30]},"content":"getTraids (Two Groups)","children":[]},{"type":"list_item","depth":2,"payload":{"lines":[30,31]},"content":"plotVolcano","children":[]},{"type":"list_item","depth":2,"payload":{"lines":[31,32]},"content":"getDiffTargetGenes","children":[]},{"type":"list_item","depth":2,"payload":{"lines":[32,33]},"content":"getTraidsTargetGenes","children":[]},{"type":"list_item","depth":2,"payload":{"lines":[33,34]},"content":"plotMA","children":[]}]},{"type":"heading","depth":1,"payload":{"lines":[35,36]},"content":"Differential Analysis (Multiple Samples)","children":[{"type":"list_item","depth":2,"payload":{"lines":[36,37]},"content":"calSPM","children":[]},{"type":"list_item","depth":2,"payload":{"lines":[37,38]},"content":"getTopSpecifcPeaks","children":[]},{"type":"list_item","depth":2,"payload":{"lines":[38,39]},"content":"calJSDscore","children":[]},{"type":"list_item","depth":2,"payload":{"lines":[39,40]},"content":"getSpecificPeak","children":[]},{"type":"list_item","depth":2,"payload":{"lines":[40,41]},"content":"plotSpecificPeak","children":[]},{"type":"list_item","depth":2,"payload":{"lines":[41,42]},"content":"getClusterNum","children":[]},{"type":"list_item","depth":2,"payload":{"lines":[42,43]},"content":"plotClusterSpecificPeak","children":[]},{"type":"list_item","depth":2,"payload":{"lines":[43,44]},"content":"getClusterTargetGenes","children":[]},{"type":"list_item","depth":2,"payload":{"lines":[44,45]},"content":"plotGO","children":[]},{"type":"list_item","depth":2,"payload":{"lines":[45,46]},"content":"plotGONetwork","children":[]},{"type":"list_item","depth":2,"payload":{"lines":[46,47]},"content":"plotTracks","children":[]}]},{"type":"heading","depth":1,"payload":{"lines":[48,49]},"content":"Time Series Analysis","children":[{"type":"list_item","depth":2,"payload":{"lines":[49,50]},"content":"getTimeATAC","children":[]},{"type":"list_item","depth":2,"payload":{"lines":[50,51]},"content":"getTimeRNA","children":[]},{"type":"list_item","depth":2,"payload":{"lines":[51,52]},"content":"getTimeGene","children":[]},{"type":"list_item","depth":2,"payload":{"lines":[52,53]},"content":"plotTimeGene","children":[]}]},{"type":"heading","depth":1,"payload":{"lines":[54,55]},"content":"Motif Analysis (chromVAR)","children":[{"type":"list_item","depth":2,"payload":{"lines":[55,56]},"content":"getCount","children":[]},{"type":"list_item","depth":2,"payload":{"lines":[56,57]},"content":"makeSummarizedExperiment","children":[]},{"type":"list_item","depth":2,"payload":{"lines":[57,58]},"content":"getRankMotif","children":[]}]},{"type":"heading","depth":1,"payload":{"lines":[59,60]},"content":"Footprinting","children":[{"type":"list_item","depth":2,"payload":{"lines":[60,61]},"content":"getFootprintScore","children":[]},{"type":"list_item","depth":2,"payload":{"lines":[61,62]},"content":"plotFootprintScore","children":[]},{"type":"list_item","depth":2,"payload":{"lines":[62,63]},"content":"compareFootprints","children":[]},{"type":"list_item","depth":2,"payload":{"lines":[63,64]},"content":"getDiffFootprint","children":[]},{"type":"list_item","depth":2,"payload":{"lines":[64,65]},"content":"plotDiffFootprint","children":[]},{"type":"list_item","depth":2,"payload":{"lines":[65,66]},"content":"getAllFPD","children":[]},{"type":"list_item","depth":2,"payload":{"lines":[66,67]},"content":"plotAllFPD","children":[]},{"type":"list_item","depth":2,"payload":{"lines":[67,68]},"content":"compareFPD","children":[]},{"type":"list_item","depth":2,"payload":{"lines":[68,69]},"content":"getMotif2Gene","children":[]},{"type":"list_item","depth":2,"payload":{"lines":[69,70]},"content":"plotFootprintScoreExp","children":[]}]},{"type":"heading","depth":1,"payload":{"lines":[71,72]},"content":"Co-accessible","children":[{"type":"list_item","depth":2,"payload":{"lines":[72,73]},"content":"getCoaccessible","children":[]},{"type":"list_item","depth":2,"payload":{"lines":[73,74]},"content":"plotCoTracks","children":[]}]},{"type":"heading","depth":1,"payload":{"lines":[75,76]},"content":"Peak-to-Gene","children":[{"type":"list_item","depth":2,"payload":{"lines":[76,77]},"content":"getPeak2Gene","children":[]},{"type":"list_item","depth":2,"payload":{"lines":[77,78]},"content":"plotPeak2Gene","children":[]},{"type":"list_item","depth":2,"payload":{"lines":[78,79]},"content":"plotP2GHeatmap","children":[]},{"type":"list_item","depth":2,"payload":{"lines":[79,80]},"content":"plotSpecificP2GHeatmap","children":[]},{"type":"list_item","depth":2,"payload":{"lines":[80,81]},"content":"plotPeakGene","children":[]}]},{"type":"heading","depth":1,"payload":{"lines":[82,83]},"content":"Regulatory Network","children":[{"type":"list_item","depth":2,"payload":{"lines":[83,84]},"content":"getNetwork","children":[]},{"type":"list_item","depth":2,"payload":{"lines":[84,85]},"content":"plotNetwork","children":[]}]},{"type":"heading","depth":1,"payload":{"lines":[86,87]},"content":"GWAS Enrichment","children":[{"type":"list_item","depth":2,"payload":{"lines":[87,88]},"content":"GWASNorm","children":[]},{"type":"list_item","depth":2,"payload":{"lines":[88,89]},"content":"GWASEnrichment","children":[]},{"type":"list_item","depth":2,"payload":{"lines":[89,90]},"content":"plotGER","children":[]}]},{"type":"heading","depth":1,"payload":{"lines":[91,92]},"content":"Peak Fisher","children":[{"type":"list_item","depth":2,"payload":{"lines":[92,93]},"content":"calFisherPeaks","children":[]},{"type":"list_item","depth":2,"payload":{"lines":[93,94]},"content":"plotEnrich","children":[]}]},{"type":"heading","depth":1,"payload":{"lines":[95,96]},"content":"Others","children":[{"type":"list_item","depth":2,"payload":{"lines":[96,97]},"content":"getSNP2Gene","children":[]},{"type":"list_item","depth":2,"payload":{"lines":[97,98]},"content":"getSuperEnhancer","children":[]}]}]},{"colorFreezeLevel":2})</script>
+</body>
+</html>
+<p>Our whole workflow consists of two major parts, one is data preprocessing and QC (<strong>cat-snakemake</strong>) built on <a href="https://snakemake.readthedocs.io/en/stable/">snakemake</a> framework, and the other is downstream analysis based on R package (<strong>CAT</strong>).</p>
+</div>
+<div id="getting-set-up" class="section level2 hasAnchor" number="2.2">
+<h2><span class="header-section-number">2.2</span> Getting Set Up<a href="getting-started-with-cat-1.html#getting-set-up" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Before you use CAT, use the <strong>addAnnotation</strong> and <strong>addFootprint</strong> functions to add the necessary annotations.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="getting-started-with-cat-1.html#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(CAT)</span></code></pre></div>
+<pre><code>## Warning: replacing previous import &#39;dplyr::setdiff&#39; by &#39;GenomicRanges::setdiff&#39;
+## when loading &#39;CAT&#39;</code></pre>
+<pre><code>## Warning: replacing previous import &#39;dplyr::intersect&#39; by
+## &#39;GenomicRanges::intersect&#39; when loading &#39;CAT&#39;</code></pre>
+<pre><code>## Warning: replacing previous import &#39;dplyr::union&#39; by &#39;GenomicRanges::union&#39;
+## when loading &#39;CAT&#39;</code></pre>
+<pre><code>## 
+##                       ______             ___           ____________
+##                      /      |           /   \         |____    ____|
+##                     |  ,----&#39;          /  ^  \             |  |
+##                     |  |              /  /_\  \            |  |
+##                     |  `----.        /  _____  \           |  |
+##                      \______|       /__/     \__\          |__|</code></pre>
+<pre><code>## Author: Tao Zhu</code></pre>
+<pre><code>## CAT : Version 1.0.0</code></pre>
+<pre><code>## If you encounter a bug please report : https://github.com/tzhu-bio/CAT/issues</code></pre>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="getting-started-with-cat-1.html#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">addAnnotation</span>(<span class="at">gene_bed =</span> <span class="st">&quot;F:/CAT/example/hg19_gene_standard.bed&quot;</span>,</span>
+<span id="cb9-2"><a href="getting-started-with-cat-1.html#cb9-2" aria-hidden="true" tabindex="-1"></a>              <span class="at">gtf =</span> <span class="st">&quot;F:/CAT/data/bw/hg19.gtf&quot;</span>,</span>
+<span id="cb9-3"><a href="getting-started-with-cat-1.html#cb9-3" aria-hidden="true" tabindex="-1"></a>              <span class="at">genome_size =</span> <span class="st">&quot;F:/CAT/example/hg19.chrom.size&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="getting-started-with-cat-1.html#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">addFootprint</span>(<span class="at">corrected_signal =</span> <span class="st">&quot;F:/CAT/example/ATACcorrect/&quot;</span>,</span>
+<span id="cb10-2"><a href="getting-started-with-cat-1.html#cb10-2" aria-hidden="true" tabindex="-1"></a>             <span class="at">bindetect_result =</span> <span class="st">&quot;F:/CAT/example/BINDetect/&quot;</span>)</span></code></pre></div>
+<p>Where the <em><strong>gene_bed</strong></em> is the gene’s bed file, including chromosome number, start position, end position, and so on. Note that column names are NOT included.</p>
+<pre><code>##     V1     V2     V3              V4 V5 V6
+## 1 chr1  11869  14412 ENSG00000223972  1  +
+## 2 chr1  14363  29806 ENSG00000227232  1  -
+## 3 chr1  52473  54936 ENSG00000268020  1  +
+## 4 chr1  62948  63887 ENSG00000240361  1  +
+## 5 chr1  69091  70008 ENSG00000186092  1  +
+## 6 chr1 131025 134836 ENSG00000233750  1  +</code></pre>
+<p>Where the <em><strong>genome_size</strong></em> file includes the size of each chromosome. This file has been generated by our snakemake and you can read it directly.</p>
+<pre><code>##     V1        V2
+## 1 chr1 249250621
+## 2 chr2 243199373
+## 3 chr3 198022430
+## 4 chr4 191154276
+## 5 chr5 180915260
+## 6 chr6 171115067</code></pre>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="snakemake-pipeline.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/rstudio/bookdown-demo/edit/master/00-Start.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["bookdown-demo.pdf", "bookdown-demo.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>
