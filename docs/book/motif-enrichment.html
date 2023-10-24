@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 10 Motif Enrichment | cisDynet：an integrated platform for modeling gene-regulatory dynamics and networks</title>
+  <meta name="description" content="cis-regulatory chromatin dynamics and networks." />
+  <meta name="generator" content="bookdown 0.34 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 10 Motif Enrichment | cisDynet：an integrated platform for modeling gene-regulatory dynamics and networks" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="cis-regulatory chromatin dynamics and networks." />
+  <meta name="github-repo" content="rstudio/bookdown-demo" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 10 Motif Enrichment | cisDynet：an integrated platform for modeling gene-regulatory dynamics and networks" />
+  
+  <meta name="twitter:description" content="cis-regulatory chromatin dynamics and networks." />
+  
+
+<meta name="author" content="Tao Zhu" />
+
+
+<meta name="date" content="2023-08-24" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="time-course-data.html"/>
+<link rel="next" href="footprint-analysis.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">cisDynet</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Primer</a></li>
+<li class="chapter" data-level="2" data-path="getting-started-with-cisdynet.html"><a href="getting-started-with-cisdynet.html"><i class="fa fa-check"></i><b>2</b> Getting Started with cisDynet</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="getting-started-with-cisdynet.html"><a href="getting-started-with-cisdynet.html#why-use-cisdynet"><i class="fa fa-check"></i><b>2.1</b> Why use cisDynet?</a></li>
+<li class="chapter" data-level="2.2" data-path="getting-started-with-cisdynet.html"><a href="getting-started-with-cisdynet.html#getting-set-up"><i class="fa fa-check"></i><b>2.2</b> Getting Set Up</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="snakemake-pipeline.html"><a href="snakemake-pipeline.html"><i class="fa fa-check"></i><b>3</b> Snakemake Pipeline</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="snakemake-pipeline.html"><a href="snakemake-pipeline.html#example-data"><i class="fa fa-check"></i><b>3.1</b> Example Data</a></li>
+<li class="chapter" data-level="3.2" data-path="snakemake-pipeline.html"><a href="snakemake-pipeline.html#config-file"><i class="fa fa-check"></i><b>3.2</b> Config File</a></li>
+<li class="chapter" data-level="3.3" data-path="snakemake-pipeline.html"><a href="snakemake-pipeline.html#blacklists"><i class="fa fa-check"></i><b>3.3</b> Blacklists</a></li>
+<li class="chapter" data-level="3.4" data-path="snakemake-pipeline.html"><a href="snakemake-pipeline.html#pipeline-output-folders"><i class="fa fa-check"></i><b>3.4</b> Pipeline Output Folders</a></li>
+<li class="chapter" data-level="3.5" data-path="snakemake-pipeline.html"><a href="snakemake-pipeline.html#report-explanation"><i class="fa fa-check"></i><b>3.5</b> Report Explanation</a></li>
+<li class="chapter" data-level="3.6" data-path="snakemake-pipeline.html"><a href="snakemake-pipeline.html#troubleshooting"><i class="fa fa-check"></i><b>3.6</b> Troubleshooting</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="quality-control-plot.html"><a href="quality-control-plot.html"><i class="fa fa-check"></i><b>4</b> Quality Control Plot</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="quality-control-plot.html"><a href="quality-control-plot.html#plotfragments"><i class="fa fa-check"></i><b>4.1</b> plotFragments</a></li>
+<li class="chapter" data-level="4.2" data-path="quality-control-plot.html"><a href="quality-control-plot.html#plottss"><i class="fa fa-check"></i><b>4.2</b> plotTSS</a></li>
+<li class="chapter" data-level="4.3" data-path="quality-control-plot.html"><a href="quality-control-plot.html#quantification"><i class="fa fa-check"></i><b>4.3</b> Quantification</a></li>
+<li class="chapter" data-level="4.4" data-path="quality-control-plot.html"><a href="quality-control-plot.html#pca"><i class="fa fa-check"></i><b>4.4</b> PCA</a></li>
+<li class="chapter" data-level="4.5" data-path="quality-control-plot.html"><a href="quality-control-plot.html#dendrogram"><i class="fa fa-check"></i><b>4.5</b> Dendrogram</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="peak-overlap-analysis.html"><a href="peak-overlap-analysis.html"><i class="fa fa-check"></i><b>5</b> Peak Overlap Analysis</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="peak-overlap-analysis.html"><a href="peak-overlap-analysis.html#plotvenn2---6-samples"><i class="fa fa-check"></i><b>5.1</b> PlotVenn(2 - 6 samples)</a></li>
+<li class="chapter" data-level="5.2" data-path="peak-overlap-analysis.html"><a href="peak-overlap-analysis.html#plotupset"><i class="fa fa-check"></i><b>5.2</b> plotUpSet</a></li>
+<li class="chapter" data-level="5.3" data-path="peak-overlap-analysis.html"><a href="peak-overlap-analysis.html#pairwise-module-examples"><i class="fa fa-check"></i><b>5.3</b> Pairwise module examples</a></li>
+<li class="chapter" data-level="5.4" data-path="peak-overlap-analysis.html"><a href="peak-overlap-analysis.html#flower-plot"><i class="fa fa-check"></i><b>5.4</b> Flower plot</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="peak-annotaion.html"><a href="peak-annotaion.html"><i class="fa fa-check"></i><b>6</b> Peak annotaion</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="peak-annotaion.html"><a href="peak-annotaion.html#chipseeker-annotation"><i class="fa fa-check"></i><b>6.1</b> ChIPSeeker annotation</a></li>
+<li class="chapter" data-level="6.2" data-path="peak-annotaion.html"><a href="peak-annotaion.html#the-distance-of-peak-summit-to-tss"><i class="fa fa-check"></i><b>6.2</b> The distance of Peak summit to TSS</a></li>
+<li class="chapter" data-level="6.3" data-path="peak-annotaion.html"><a href="peak-annotaion.html#proximal-distal-intragenic-annotaion"><i class="fa fa-check"></i><b>6.3</b> Proximal / Distal / Intragenic Annotaion</a></li>
+<li class="chapter" data-level="6.4" data-path="peak-annotaion.html"><a href="peak-annotaion.html#annotation-for-merged-peaks"><i class="fa fa-check"></i><b>6.4</b> Annotation for merged peaks</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="differential-ocr-analysis.html"><a href="differential-ocr-analysis.html"><i class="fa fa-check"></i><b>7</b> Differential OCR analysis</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="differential-ocr-analysis.html"><a href="differential-ocr-analysis.html#using-deseq2-to-identify-differentail-ocr-two-groups"><i class="fa fa-check"></i><b>7.1</b> Using DEseq2 to identify differentail OCR (Two groups)</a></li>
+<li class="chapter" data-level="7.2" data-path="differential-ocr-analysis.html"><a href="differential-ocr-analysis.html#get-the-differential-peaks-target-genes"><i class="fa fa-check"></i><b>7.2</b> Get the differential peaks target genes</a></li>
+<li class="chapter" data-level="7.3" data-path="differential-ocr-analysis.html"><a href="differential-ocr-analysis.html#plotma"><i class="fa fa-check"></i><b>7.3</b> PlotMA</a></li>
+<li class="chapter" data-level="7.4" data-path="differential-ocr-analysis.html"><a href="differential-ocr-analysis.html#compare-the-three-samples-chromatin-accessibility-three-samples"><i class="fa fa-check"></i><b>7.4</b> Compare the three samples chromatin accessibility (Three samples)</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="tissuesample-specific-analysis.html"><a href="tissuesample-specific-analysis.html"><i class="fa fa-check"></i><b>8</b> Tissue(Sample) Specific Analysis</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="tissuesample-specific-analysis.html"><a href="tissuesample-specific-analysis.html#calaluate-the-spm-matrix"><i class="fa fa-check"></i><b>8.1</b> Calaluate the SPM matrix</a></li>
+<li class="chapter" data-level="8.2" data-path="tissuesample-specific-analysis.html"><a href="tissuesample-specific-analysis.html#select-the-specific-peak-with-your-interests"><i class="fa fa-check"></i><b>8.2</b> Select the specific peak with your interests</a></li>
+<li class="chapter" data-level="8.3" data-path="tissuesample-specific-analysis.html"><a href="tissuesample-specific-analysis.html#select-the-specifc-peaks-with-jsd-score"><i class="fa fa-check"></i><b>8.3</b> Select the specifc peaks with JSD score</a></li>
+<li class="chapter" data-level="8.4" data-path="tissuesample-specific-analysis.html"><a href="tissuesample-specific-analysis.html#get-the-top-n-specific-peaks-in-every-samples-tissues"><i class="fa fa-check"></i><b>8.4</b> Get the Top N specific peaks in every Samples / Tissues</a></li>
+<li class="chapter" data-level="8.5" data-path="tissuesample-specific-analysis.html"><a href="tissuesample-specific-analysis.html#get-the-optimal-cluster-number"><i class="fa fa-check"></i><b>8.5</b> Get the optimal cluster number</a></li>
+<li class="chapter" data-level="8.6" data-path="tissuesample-specific-analysis.html"><a href="tissuesample-specific-analysis.html#get-the-cluster-target-genes"><i class="fa fa-check"></i><b>8.6</b> Get the cluster target genes</a></li>
+<li class="chapter" data-level="8.7" data-path="tissuesample-specific-analysis.html"><a href="tissuesample-specific-analysis.html#go-enrichment"><i class="fa fa-check"></i><b>8.7</b> GO Enrichment</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="time-course-data.html"><a href="time-course-data.html"><i class="fa fa-check"></i><b>9</b> Time Course Data</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="time-course-data.html"><a href="time-course-data.html#fitting-time-with-atac-seq"><i class="fa fa-check"></i><b>9.1</b> Fitting time with ATAC-seq</a></li>
+<li class="chapter" data-level="9.2" data-path="time-course-data.html"><a href="time-course-data.html#integration-with-rna-seq"><i class="fa fa-check"></i><b>9.2</b> Integration with RNA-seq</a></li>
+<li class="chapter" data-level="9.3" data-path="time-course-data.html"><a href="time-course-data.html#get-fitting-time-genes"><i class="fa fa-check"></i><b>9.3</b> Get fitting time genes</a></li>
+<li class="chapter" data-level="9.4" data-path="time-course-data.html"><a href="time-course-data.html#integration-with-atac-rna-seq"><i class="fa fa-check"></i><b>9.4</b> Integration with ATAC / RNA-seq</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="motif-enrichment.html"><a href="motif-enrichment.html"><i class="fa fa-check"></i><b>10</b> Motif Enrichment</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="motif-enrichment.html"><a href="motif-enrichment.html#chromvar"><i class="fa fa-check"></i><b>10.1</b> ChromVAR</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="footprint-analysis.html"><a href="footprint-analysis.html"><i class="fa fa-check"></i><b>11</b> Footprint Analysis</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="footprint-analysis.html"><a href="footprint-analysis.html#get-footprint-score"><i class="fa fa-check"></i><b>11.1</b> Get footprint score</a></li>
+<li class="chapter" data-level="11.2" data-path="footprint-analysis.html"><a href="footprint-analysis.html#plot-footprint-score"><i class="fa fa-check"></i><b>11.2</b> Plot footprint score</a></li>
+<li class="chapter" data-level="11.3" data-path="footprint-analysis.html"><a href="footprint-analysis.html#compare-footprints"><i class="fa fa-check"></i><b>11.3</b> Compare Footprints</a></li>
+<li class="chapter" data-level="11.4" data-path="footprint-analysis.html"><a href="footprint-analysis.html#get-differential-footprints"><i class="fa fa-check"></i><b>11.4</b> Get Differential Footprints</a></li>
+<li class="chapter" data-level="11.5" data-path="footprint-analysis.html"><a href="footprint-analysis.html#getmotif2gene"><i class="fa fa-check"></i><b>11.5</b> getMotif2Gene</a></li>
+<li class="chapter" data-level="11.6" data-path="footprint-analysis.html"><a href="footprint-analysis.html#integration-with-rna-seq-1"><i class="fa fa-check"></i><b>11.6</b> Integration with RNA-seq</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="co-accessibility.html"><a href="co-accessibility.html"><i class="fa fa-check"></i><b>12</b> Co-accessibility</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="co-accessibility.html"><a href="co-accessibility.html#co-accessibility-calaulation"><i class="fa fa-check"></i><b>12.1</b> Co-accessibility calaulation</a></li>
+<li class="chapter" data-level="12.2" data-path="co-accessibility.html"><a href="co-accessibility.html#plotting-browser-tracks-of-co-accessibility"><i class="fa fa-check"></i><b>12.2</b> Plotting browser tracks of Co-accessibility</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="linking-peak-to-gene.html"><a href="linking-peak-to-gene.html"><i class="fa fa-check"></i><b>13</b> Linking Peak to Gene</a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="linking-peak-to-gene.html"><a href="linking-peak-to-gene.html#get-the-peak-target-genes"><i class="fa fa-check"></i><b>13.1</b> Get the peak target genes</a></li>
+<li class="chapter" data-level="13.2" data-path="linking-peak-to-gene.html"><a href="linking-peak-to-gene.html#plot-all-the-significant-peak2gene-links"><i class="fa fa-check"></i><b>13.2</b> Plot all the significant peak2gene links</a></li>
+<li class="chapter" data-level="13.3" data-path="linking-peak-to-gene.html"><a href="linking-peak-to-gene.html#link-ocr-to-genes"><i class="fa fa-check"></i><b>13.3</b> Link OCR to genes</a></li>
+<li class="chapter" data-level="13.4" data-path="linking-peak-to-gene.html"><a href="linking-peak-to-gene.html#plotp2gtracks"><i class="fa fa-check"></i><b>13.4</b> plotP2GTracks</a></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="building-regulatory-network.html"><a href="building-regulatory-network.html"><i class="fa fa-check"></i><b>14</b> Building regulatory network</a>
+<ul>
+<li class="chapter" data-level="14.1" data-path="building-regulatory-network.html"><a href="building-regulatory-network.html#motif2gene"><i class="fa fa-check"></i><b>14.1</b> Motif2Gene</a></li>
+<li class="chapter" data-level="14.2" data-path="building-regulatory-network.html"><a href="building-regulatory-network.html#building-regulatory-network-1"><i class="fa fa-check"></i><b>14.2</b> Building regulatory network</a></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="gwas-trait-snps-enrichment.html"><a href="gwas-trait-snps-enrichment.html"><i class="fa fa-check"></i><b>15</b> GWAS Trait SNPs Enrichment</a>
+<ul>
+<li class="chapter" data-level="15.1" data-path="gwas-trait-snps-enrichment.html"><a href="gwas-trait-snps-enrichment.html#workflows"><i class="fa fa-check"></i><b>15.1</b> Workflows</a></li>
+<li class="chapter" data-level="15.2" data-path="gwas-trait-snps-enrichment.html"><a href="gwas-trait-snps-enrichment.html#preprocessing"><i class="fa fa-check"></i><b>15.2</b> Preprocessing</a></li>
+<li class="chapter" data-level="15.3" data-path="gwas-trait-snps-enrichment.html"><a href="gwas-trait-snps-enrichment.html#do-enrichment"><i class="fa fa-check"></i><b>15.3</b> Do Enrichment</a></li>
+<li class="chapter" data-level="15.4" data-path="gwas-trait-snps-enrichment.html"><a href="gwas-trait-snps-enrichment.html#plotting"><i class="fa fa-check"></i><b>15.4</b> Plotting</a></li>
+</ul></li>
+<li class="chapter" data-level="16" data-path="other-utils.html"><a href="other-utils.html"><i class="fa fa-check"></i><b>16</b> Other Utils</a>
+<ul>
+<li class="chapter" data-level="16.1" data-path="other-utils.html"><a href="other-utils.html#super-enhancer"><i class="fa fa-check"></i><b>16.1</b> Super Enhancer</a></li>
+<li class="chapter" data-level="16.2" data-path="other-utils.html"><a href="other-utils.html#peak-fisher-test"><i class="fa fa-check"></i><b>16.2</b> Peak Fisher Test</a></li>
+<li class="chapter" data-level="16.3" data-path="other-utils.html"><a href="other-utils.html#snp2gene"><i class="fa fa-check"></i><b>16.3</b> SNP2Gene</a></li>
+</ul></li>
+<li class="chapter" data-level="17" data-path="session-information.html"><a href="session-information.html"><i class="fa fa-check"></i><b>17</b> Session Information</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">cisDynet：an integrated platform for modeling gene-regulatory dynamics and networks</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="motif-enrichment" class="section level1 hasAnchor" number="10">
+<h1><span class="header-section-number">Chapter 10</span> Motif Enrichment<a href="motif-enrichment.html#motif-enrichment" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>In the above chapter we know which OCRs are differentiated by compared to the treatment group, or the dynamics of changing OCRs in different periods/samples. Now we’re more interested in knowing exactly what kind of motifs these changing OCRs will have. In other words, what exactly are the important TFs that determine the differences between your different samples?</p>
+<p>The most common way to do this is to use PWM / PFM to go against the sequences in your differential/dynamic OCR to see which TF-bound motifs match the sequences in your differential OCRs. There are already many tools available to help us do this. Common ones are FIMO, AME and SEA in the MEME toolkit, to name a few. So we’re not developing a new approach here, what we’re doing is taking existing tools and making them work well and compatible with our cisDynet. Here, we will mainly consider AME, FIMO, TOMTOM from the MEME toolkit. thankfully, Nystrom SL has implemented these functions in R already. We will further wrap these functions to match our cisDynet.</p>
+<div id="chromvar" class="section level2 hasAnchor" number="10.1">
+<h2><span class="header-section-number">10.1</span> ChromVAR<a href="motif-enrichment.html#chromvar" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="motif-enrichment.html#cb1-1" aria-hidden="true" tabindex="-1"></a>counts <span class="ot">&lt;-</span> <span class="fu">getCount</span>(<span class="at">sample_list=</span><span class="fu">c</span>(<span class="st">&quot;Bulk_B&quot;</span>, </span>
+<span id="cb1-2"><a href="motif-enrichment.html#cb1-2" aria-hidden="true" tabindex="-1"></a>                                  <span class="st">&quot;Mem_B&quot;</span>,</span>
+<span id="cb1-3"><a href="motif-enrichment.html#cb1-3" aria-hidden="true" tabindex="-1"></a>                                  <span class="st">&quot;Naive_B&quot;</span>,</span>
+<span id="cb1-4"><a href="motif-enrichment.html#cb1-4" aria-hidden="true" tabindex="-1"></a>                                  <span class="st">&quot;Plasmablasts&quot;</span>,</span>
+<span id="cb1-5"><a href="motif-enrichment.html#cb1-5" aria-hidden="true" tabindex="-1"></a>                                  <span class="st">&quot;CD8pos_T&quot;</span>,</span>
+<span id="cb1-6"><a href="motif-enrichment.html#cb1-6" aria-hidden="true" tabindex="-1"></a>                                  <span class="st">&quot;Central_memory_CD8pos_T&quot;</span>,</span>
+<span id="cb1-7"><a href="motif-enrichment.html#cb1-7" aria-hidden="true" tabindex="-1"></a>                                  <span class="st">&quot;Effector_memory_CD8pos_T&quot;</span>,</span>
+<span id="cb1-8"><a href="motif-enrichment.html#cb1-8" aria-hidden="true" tabindex="-1"></a>                                  <span class="st">&quot;Naive_CD8_T&quot;</span>,</span>
+<span id="cb1-9"><a href="motif-enrichment.html#cb1-9" aria-hidden="true" tabindex="-1"></a>                                  <span class="st">&quot;Gamma_delta_T&quot;</span>,</span>
+<span id="cb1-10"><a href="motif-enrichment.html#cb1-10" aria-hidden="true" tabindex="-1"></a>                                  <span class="st">&quot;Effector_CD4pos_T&quot;</span>,</span>
+<span id="cb1-11"><a href="motif-enrichment.html#cb1-11" aria-hidden="true" tabindex="-1"></a>                                  <span class="st">&quot;Follicular_T_Helper&quot;</span>,</span>
+<span id="cb1-12"><a href="motif-enrichment.html#cb1-12" aria-hidden="true" tabindex="-1"></a>                                  <span class="st">&quot;Memory_Teffs&quot;</span>,</span>
+<span id="cb1-13"><a href="motif-enrichment.html#cb1-13" aria-hidden="true" tabindex="-1"></a>                                  <span class="st">&quot;Memory_Tregs&quot;</span>,</span>
+<span id="cb1-14"><a href="motif-enrichment.html#cb1-14" aria-hidden="true" tabindex="-1"></a>                                  <span class="st">&quot;Naive_Teffs&quot;</span>,</span>
+<span id="cb1-15"><a href="motif-enrichment.html#cb1-15" aria-hidden="true" tabindex="-1"></a>                                  <span class="st">&quot;Regulatory_T&quot;</span>,</span>
+<span id="cb1-16"><a href="motif-enrichment.html#cb1-16" aria-hidden="true" tabindex="-1"></a>                                  <span class="st">&quot;Th1_precursors&quot;</span>, </span>
+<span id="cb1-17"><a href="motif-enrichment.html#cb1-17" aria-hidden="true" tabindex="-1"></a>                                  <span class="st">&quot;Immature_NK&quot;</span>,</span>
+<span id="cb1-18"><a href="motif-enrichment.html#cb1-18" aria-hidden="true" tabindex="-1"></a>                                  <span class="st">&quot;Mature_NK&quot;</span>,</span>
+<span id="cb1-19"><a href="motif-enrichment.html#cb1-19" aria-hidden="true" tabindex="-1"></a>                                  <span class="st">&quot;Monocytes&quot;</span>,</span>
+<span id="cb1-20"><a href="motif-enrichment.html#cb1-20" aria-hidden="true" tabindex="-1"></a>                                  <span class="st">&quot;pDCs&quot;</span>), </span>
+<span id="cb1-21"><a href="motif-enrichment.html#cb1-21" aria-hidden="true" tabindex="-1"></a>                   <span class="at">cut_path=</span><span class="st">&quot;F:/cisDynet/example/cut_sites/&quot;</span>, </span>
+<span id="cb1-22"><a href="motif-enrichment.html#cb1-22" aria-hidden="true" tabindex="-1"></a>                   <span class="at">peak_path=</span><span class="st">&quot;F:/cisDynet/example/peaks&quot;</span>,</span>
+<span id="cb1-23"><a href="motif-enrichment.html#cb1-23" aria-hidden="true" tabindex="-1"></a>                   <span class="at">save_file_path=</span><span class="st">&quot;F:/cisDynet/example/&quot;</span>,</span>
+<span id="cb1-24"><a href="motif-enrichment.html#cb1-24" aria-hidden="true" tabindex="-1"></a>                   <span class="at">peak_suffix =</span> <span class="st">&quot;_peaks_unique.narrowPeak.bed&quot;</span>)</span>
+<span id="cb1-25"><a href="motif-enrichment.html#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(counts)</span></code></pre></div>
+<pre><code>##                    Bulk_B  Mem_B Naive_B Plasmablasts CD8pos_T
+## chr1:9910-10596       119    152     103          185      163
+## chr1:564574-570175 454341 410439  515101       280478   526103
+## chr1:713757-714733   1496   1341    1621          991     1288
+## chr1:750692-750842      2      0       0            0        0
+## chr1:752562-752915     14     14       4           30       19
+## chr1:762339-763292    490    477     564          381      480
+##                    Central_memory_CD8pos_T Effector_memory_CD8pos_T Naive_CD8_T
+## chr1:9910-10596                        135                      154          50
+## chr1:564574-570175                  266369                   425560      396896
+## chr1:713757-714733                    1255                     1284         451
+## chr1:750692-750842                       0                        5           0
+## chr1:752562-752915                      41                       53           6
+## chr1:762339-763292                     361                      451         136
+##                    Gamma_delta_T Effector_CD4pos_T Follicular_T_Helper
+## chr1:9910-10596              116               126                 144
+## chr1:564574-570175        254157            495122              361234
+## chr1:713757-714733          1182              1546                 816
+## chr1:750692-750842             4                 0                   0
+## chr1:752562-752915            51                46                  21
+## chr1:762339-763292           551               465                 260
+##                    Memory_Teffs Memory_Tregs Naive_Teffs Regulatory_T
+## chr1:9910-10596             129          237          74          154
+## chr1:564574-570175       300415       295119      421663       347173
+## chr1:713757-714733         1235          569         885          397
+## chr1:750692-750842            1            0           0            0
+## chr1:752562-752915           72           14           7            6
+## chr1:762339-763292          463          207         290          163
+##                    Th1_precursors Immature_NK Mature_NK Monocytes  pDCs
+## chr1:9910-10596               114          91       128       160    53
+## chr1:564574-570175         400776      104315    138450    172779 96076
+## chr1:713757-714733           1089         886       836       461   112
+## chr1:750692-750842              0          13         3         0     0
+## chr1:752562-752915             18          49        24        46    10
+## chr1:762339-763292            392         651       558       164    31</code></pre>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="motif-enrichment.html#cb3-1" aria-hidden="true" tabindex="-1"></a>fragment_counts <span class="ot">&lt;-</span> <span class="fu">makeSummarizedExperiment</span>(counts)</span></code></pre></div>
+<pre><code>## 2023-10-23 15:31:51 Making SummarizedExperiment object...</code></pre>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="motif-enrichment.html#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(chromVAR)</span>
+<span id="cb5-2"><a href="motif-enrichment.html#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(motifmatchr)</span>
+<span id="cb5-3"><a href="motif-enrichment.html#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(BSgenome.Hsapiens.UCSC.hg19)</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="motif-enrichment.html#cb6-1" aria-hidden="true" tabindex="-1"></a>fragment_counts <span class="ot">&lt;-</span> <span class="fu">addGCBias</span>(fragment_counts, <span class="at">genome =</span> BSgenome.Hsapiens.UCSC.hg19)</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="motif-enrichment.html#cb7-1" aria-hidden="true" tabindex="-1"></a>motifs <span class="ot">&lt;-</span> <span class="fu">getJasparMotifs2018</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="motif-enrichment.html#cb8-1" aria-hidden="true" tabindex="-1"></a>motif_ix <span class="ot">&lt;-</span> <span class="fu">matchMotifs</span>(motifs, fragment_counts, <span class="at">genome =</span> BSgenome.Hsapiens.UCSC.hg19)</span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="motif-enrichment.html#cb9-1" aria-hidden="true" tabindex="-1"></a>dev <span class="ot">&lt;-</span> <span class="fu">computeDeviations</span>(<span class="at">object =</span> fragment_counts, <span class="at">annotations =</span> motif_ix)</span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="motif-enrichment.html#cb10-1" aria-hidden="true" tabindex="-1"></a>dev_score <span class="ot">&lt;-</span> <span class="fu">deviationScores</span>(dev)</span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="motif-enrichment.html#cb11-1" aria-hidden="true" tabindex="-1"></a>pheatmap<span class="sc">::</span><span class="fu">pheatmap</span>(dev_score[<span class="dv">1</span><span class="sc">:</span><span class="dv">20</span>,])</span></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/pheatmap-1.png" width="672" /></p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="motif-enrichment.html#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">getRankMotif</span>(<span class="at">deviation_result =</span> dev)</span></code></pre></div>
+<pre><code>## 2023-10-23 15:35:37 Computing the variability...</code></pre>
+<p><img src="bookdown-demo_files/figure-html/getRankMotif-1.png" width="672" style="display: block; margin: auto;" /></p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="time-course-data.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="footprint-analysis.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/rstudio/bookdown-demo/edit/master/08-Motif-Enrichemnt.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["bookdown-demo.pdf", "bookdown-demo.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 6 Using DEseq2 to identify differentail OCR (Two samples) | CAT: A toolkit for downstream analysis of bulk ATAC-seq data</title>
+  <meta name="description" content="A Chromatin Accessibility Toolkit for analysis ATAC-seq data (CAT)." />
+  <meta name="generator" content="bookdown 0.34 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 6 Using DEseq2 to identify differentail OCR (Two samples) | CAT: A toolkit for downstream analysis of bulk ATAC-seq data" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="A Chromatin Accessibility Toolkit for analysis ATAC-seq data (CAT)." />
+  <meta name="github-repo" content="rstudio/bookdown-demo" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 6 Using DEseq2 to identify differentail OCR (Two samples) | CAT: A toolkit for downstream analysis of bulk ATAC-seq data" />
+  
+  <meta name="twitter:description" content="A Chromatin Accessibility Toolkit for analysis ATAC-seq data (CAT)." />
+  
+
+<meta name="author" content="Tao Zhu" />
+
+
+<meta name="date" content="2023-07-19" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="peak-overlap-analysis.html"/>
+<link rel="next" href="tissue-specific-analysis.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">A Minimal Book Example</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Getting Started with CAT</a></li>
+<li class="chapter" data-level="2" data-path="snakemake-pipeline.html"><a href="snakemake-pipeline.html"><i class="fa fa-check"></i><b>2</b> Snakemake Pipeline</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="snakemake-pipeline.html"><a href="snakemake-pipeline.html#example-data"><i class="fa fa-check"></i><b>2.1</b> Example data</a></li>
+<li class="chapter" data-level="2.2" data-path="snakemake-pipeline.html"><a href="snakemake-pipeline.html#input-data-format"><i class="fa fa-check"></i><b>2.2</b> Input data format</a></li>
+<li class="chapter" data-level="2.3" data-path="snakemake-pipeline.html"><a href="snakemake-pipeline.html#paparing-your-config-file"><i class="fa fa-check"></i><b>2.3</b> Paparing your config file</a></li>
+<li class="chapter" data-level="2.4" data-path="snakemake-pipeline.html"><a href="snakemake-pipeline.html#report-explainison"><i class="fa fa-check"></i><b>2.4</b> Report explainison</a></li>
+<li class="chapter" data-level="2.5" data-path="snakemake-pipeline.html"><a href="snakemake-pipeline.html#data-quality-control-assement"><i class="fa fa-check"></i><b>2.5</b> Data Quality Control assement</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="quality-control-plot.html"><a href="quality-control-plot.html"><i class="fa fa-check"></i><b>3</b> Quality Control Plot</a></li>
+<li class="chapter" data-level="4" data-path="peak-annotaion.html"><a href="peak-annotaion.html"><i class="fa fa-check"></i><b>4</b> Peak annotaion</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="peak-annotaion.html"><a href="peak-annotaion.html#chipseeker-annotation"><i class="fa fa-check"></i><b>4.1</b> ChIPSeeker annotation</a></li>
+<li class="chapter" data-level="4.2" data-path="peak-annotaion.html"><a href="peak-annotaion.html#the-distance-of-peak-summit-to-tss"><i class="fa fa-check"></i><b>4.2</b> The distance of Peak summit to TSS</a></li>
+<li class="chapter" data-level="4.3" data-path="peak-annotaion.html"><a href="peak-annotaion.html#proximal-distal-intragenic-annotaion"><i class="fa fa-check"></i><b>4.3</b> Proximal/ Distal / Intragenic Annotaion</a></li>
+<li class="chapter" data-level="4.4" data-path="peak-annotaion.html"><a href="peak-annotaion.html#annotation-for-merged-peaks"><i class="fa fa-check"></i><b>4.4</b> Annotation for merged peaks</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="peak-overlap-analysis.html"><a href="peak-overlap-analysis.html"><i class="fa fa-check"></i><b>5</b> Peak Overlap Analysis</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="peak-overlap-analysis.html"><a href="peak-overlap-analysis.html#venn-module-examples234-samples"><i class="fa fa-check"></i><b>5.1</b> Venn module examples(2,3,4 samples)</a></li>
+<li class="chapter" data-level="5.2" data-path="peak-overlap-analysis.html"><a href="peak-overlap-analysis.html#upset-module-examples"><i class="fa fa-check"></i><b>5.2</b> UpSet module examples</a></li>
+<li class="chapter" data-level="5.3" data-path="peak-overlap-analysis.html"><a href="peak-overlap-analysis.html#pairwise-module-examples"><i class="fa fa-check"></i><b>5.3</b> Pairwise module examples</a></li>
+<li class="chapter" data-level="5.4" data-path="peak-overlap-analysis.html"><a href="peak-overlap-analysis.html#flower-plot"><i class="fa fa-check"></i><b>5.4</b> Flower plot</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="using-deseq2-to-identify-differentail-ocr-two-samples.html"><a href="using-deseq2-to-identify-differentail-ocr-two-samples.html"><i class="fa fa-check"></i><b>6</b> Using DEseq2 to identify differentail OCR (Two samples)</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="using-deseq2-to-identify-differentail-ocr-two-samples.html"><a href="using-deseq2-to-identify-differentail-ocr-two-samples.html#get-the-differential-peaks-target-genes"><i class="fa fa-check"></i><b>6.1</b> Get the differential peaks target genes</a></li>
+<li class="chapter" data-level="6.2" data-path="using-deseq2-to-identify-differentail-ocr-two-samples.html"><a href="using-deseq2-to-identify-differentail-ocr-two-samples.html#plotma"><i class="fa fa-check"></i><b>6.2</b> PlotMA</a></li>
+<li class="chapter" data-level="6.3" data-path="using-deseq2-to-identify-differentail-ocr-two-samples.html"><a href="using-deseq2-to-identify-differentail-ocr-two-samples.html#compare-the-three-samples-chromatin-accessibility-three-samples"><i class="fa fa-check"></i><b>6.3</b> Compare the three samples chromatin accessibility (Three samples)</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="tissue-specific-analysis.html"><a href="tissue-specific-analysis.html"><i class="fa fa-check"></i><b>7</b> Tissue Specific Analysis</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="tissue-specific-analysis.html"><a href="tissue-specific-analysis.html#multi-sample-analysis"><i class="fa fa-check"></i><b>7.1</b> Multi Sample Analysis</a></li>
+<li class="chapter" data-level="7.2" data-path="tissue-specific-analysis.html"><a href="tissue-specific-analysis.html#time-series-analysis"><i class="fa fa-check"></i><b>7.2</b> Time-series Analysis</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="motif-enrichment.html"><a href="motif-enrichment.html"><i class="fa fa-check"></i><b>8</b> Motif Enrichment</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="motif-enrichment.html"><a href="motif-enrichment.html#fimo-scanning"><i class="fa fa-check"></i><b>8.1</b> FIMO Scanning</a></li>
+<li class="chapter" data-level="8.2" data-path="motif-enrichment.html"><a href="motif-enrichment.html#simple-enrichment-analysissea"><i class="fa fa-check"></i><b>8.2</b> Simple Enrichment Analysis(SEA)</a></li>
+<li class="chapter" data-level="8.3" data-path="motif-enrichment.html"><a href="motif-enrichment.html#gimmemotif"><i class="fa fa-check"></i><b>8.3</b> Gimmemotif</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="footprint-with-cat.html"><a href="footprint-with-cat.html"><i class="fa fa-check"></i><b>9</b> Footprint with CAT</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="footprint-with-cat.html"><a href="footprint-with-cat.html#footprint-with-tobias"><i class="fa fa-check"></i><b>9.1</b> Footprint with TOBIAS</a></li>
+<li class="chapter" data-level="9.2" data-path="footprint-with-cat.html"><a href="footprint-with-cat.html#footprint-depth-calaulation"><i class="fa fa-check"></i><b>9.2</b> Footprint depth calaulation</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="co-accessibility-with-cat.html"><a href="co-accessibility-with-cat.html"><i class="fa fa-check"></i><b>10</b> Co-accessibility with CAT</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="co-accessibility-with-cat.html"><a href="co-accessibility-with-cat.html#data-input"><i class="fa fa-check"></i><b>10.1</b> Data Input</a></li>
+<li class="chapter" data-level="10.2" data-path="co-accessibility-with-cat.html"><a href="co-accessibility-with-cat.html#co-accessibility-calaulation"><i class="fa fa-check"></i><b>10.2</b> Co-accessibility calaulation</a></li>
+<li class="chapter" data-level="10.3" data-path="co-accessibility-with-cat.html"><a href="co-accessibility-with-cat.html#plotting-browser-tracks-of-co-accessibility"><i class="fa fa-check"></i><b>10.3</b> Plotting browser tracks of Co-accessibility</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="linking-peak-to-gene.html"><a href="linking-peak-to-gene.html"><i class="fa fa-check"></i><b>11</b> Linking Peak to Gene</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="linking-peak-to-gene.html"><a href="linking-peak-to-gene.html#data-preparation"><i class="fa fa-check"></i><b>11.1</b> Data preparation</a></li>
+<li class="chapter" data-level="11.2" data-path="linking-peak-to-gene.html"><a href="linking-peak-to-gene.html#link-ocr-to-genes"><i class="fa fa-check"></i><b>11.2</b> Link OCR to genes</a></li>
+<li class="chapter" data-level="11.3" data-path="linking-peak-to-gene.html"><a href="linking-peak-to-gene.html#output-file"><i class="fa fa-check"></i><b>11.3</b> Output file</a></li>
+<li class="chapter" data-level="11.4" data-path="linking-peak-to-gene.html"><a href="linking-peak-to-gene.html#plotting"><i class="fa fa-check"></i><b>11.4</b> Plotting</a></li>
+<li class="chapter" data-level="11.5" data-path="linking-peak-to-gene.html"><a href="linking-peak-to-gene.html#target-gene-ontology-analysis"><i class="fa fa-check"></i><b>11.5</b> Target gene ontology analysis</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="building-regulatory-network.html"><a href="building-regulatory-network.html"><i class="fa fa-check"></i><b>12</b> Building regulatory network</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="building-regulatory-network.html"><a href="building-regulatory-network.html#tobias-based"><i class="fa fa-check"></i><b>12.1</b> TOBIAS based</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="plotting-the-tracks-with-genome-browser.html"><a href="plotting-the-tracks-with-genome-browser.html"><i class="fa fa-check"></i><b>13</b> Plotting the tracks with genome browser</a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="plotting-the-tracks-with-genome-browser.html"><a href="plotting-the-tracks-with-genome-browser.html#washu-epigenome-browser"><i class="fa fa-check"></i><b>13.1</b> WashU Epigenome Browser</a></li>
+<li class="chapter" data-level="13.2" data-path="plotting-the-tracks-with-genome-browser.html"><a href="plotting-the-tracks-with-genome-browser.html#pygenometracks"><i class="fa fa-check"></i><b>13.2</b> pyGenomeTracks</a></li>
+<li class="chapter" data-level="13.3" data-path="plotting-the-tracks-with-genome-browser.html"><a href="plotting-the-tracks-with-genome-browser.html#ggcoverage"><i class="fa fa-check"></i><b>13.3</b> ggcoverage</a></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="gwas-traits-snps-enrichment.html"><a href="gwas-traits-snps-enrichment.html"><i class="fa fa-check"></i><b>14</b> GWAS traits SNPs enrichment</a>
+<ul>
+<li class="chapter" data-level="14.1" data-path="gwas-traits-snps-enrichment.html"><a href="gwas-traits-snps-enrichment.html#using-cheers-to-do-the-enrichment"><i class="fa fa-check"></i><b>14.1</b> Using CHEERS to do the enrichment</a></li>
+<li class="chapter" data-level="14.2" data-path="gwas-traits-snps-enrichment.html"><a href="gwas-traits-snps-enrichment.html#plotting-1"><i class="fa fa-check"></i><b>14.2</b> Plotting</a></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="integration-with-chip-seq.html"><a href="integration-with-chip-seq.html"><i class="fa fa-check"></i><b>15</b> Integration with ChIP-seq</a></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">CAT: A toolkit for downstream analysis of bulk ATAC-seq data</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="using-deseq2-to-identify-differentail-ocr-two-samples" class="section level1 hasAnchor" number="6">
+<h1><span class="header-section-number">Chapter 6</span> Using DEseq2 to identify differentail OCR (Two samples)<a href="using-deseq2-to-identify-differentail-ocr-two-samples.html#using-deseq2-to-identify-differentail-ocr-two-samples" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="using-deseq2-to-identify-differentail-ocr-two-samples.html#cb8-1" aria-hidden="true" tabindex="-1"></a>quant_data <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">&quot;F:/CAT/example/Diff_Analysis_Example.tsv&quot;</span>,<span class="at">head=</span>T, <span class="at">row.names =</span> <span class="dv">1</span>)</span>
+<span id="cb8-2"><a href="using-deseq2-to-identify-differentail-ocr-two-samples.html#cb8-2" aria-hidden="true" tabindex="-1"></a>diff_res <span class="ot">&lt;-</span> <span class="fu">getDiffPeak</span>(<span class="at">norm_data =</span> quant_data, <span class="at">condition =</span> <span class="fu">c</span>(<span class="st">&quot;Control&quot;</span>,<span class="st">&quot;Exper&quot;</span>), <span class="at">control =</span> <span class="st">&quot;Control&quot;</span>, <span class="at">experment =</span> <span class="st">&quot;Exper&quot;</span>,<span class="at">rep =</span> <span class="dv">2</span>)</span></code></pre></div>
+<pre><code>## converting counts to integer mode</code></pre>
+<pre><code>## estimating size factors</code></pre>
+<pre><code>## estimating dispersions</code></pre>
+<pre><code>## gene-wise dispersion estimates: 22 workers</code></pre>
+<pre><code>## mean-dispersion relationship</code></pre>
+<pre><code>## final dispersion estimates, fitting model and testing: 22 workers</code></pre>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="using-deseq2-to-identify-differentail-ocr-two-samples.html#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(diff_res)</span></code></pre></div>
+<pre><code>##                     baseMean log2FoldChange     lfcSE       stat    pvalue
+## chr1:10016-10607   54.030792      0.5635555 0.5826459  0.9672349 0.3334266
+## chr1:237589-237928 11.903993      0.3358489 0.7164559  0.4687643 0.6392381
+## chr1:521379-521712  6.946804      0.1798363 0.8110918  0.2217212 0.8245309
+## chr1:540496-541113  8.700218     -0.1107456 0.7780795 -0.1423320 0.8868178
+## chr1:559303-559603  8.693440     -0.2740060 0.7751323 -0.3534957 0.7237168
+## chr1:564421-565042 24.555285      0.2952452 0.6325501  0.4667538 0.6406760
+##                         padj  sig
+## chr1:10016-10607   0.7779954 None
+## chr1:237589-237928 0.9452912 None
+## chr1:521379-521712 0.9800009 None
+## chr1:540496-541113 0.9845317 None
+## chr1:559303-559603 0.9657660 None
+## chr1:564421-565042 0.9456528 None</code></pre>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="using-deseq2-to-identify-differentail-ocr-two-samples.html#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plotVolcano</span>(<span class="at">diff_data =</span> diff_res)</span></code></pre></div>
+<p><img src="bookdown-demo_files/figure-html/plotVolcano-1.png" width="672" /></p>
+<div id="get-the-differential-peaks-target-genes" class="section level2 hasAnchor" number="6.1">
+<h2><span class="header-section-number">6.1</span> Get the differential peaks target genes<a href="using-deseq2-to-identify-differentail-ocr-two-samples.html#get-the-differential-peaks-target-genes" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="using-deseq2-to-identify-differentail-ocr-two-samples.html#cb18-1" aria-hidden="true" tabindex="-1"></a>target <span class="ot">&lt;-</span> <span class="fu">getDiffTargetGenes</span>(<span class="at">diff_data=</span>diff_res,</span>
+<span id="cb18-2"><a href="using-deseq2-to-identify-differentail-ocr-two-samples.html#cb18-2" aria-hidden="true" tabindex="-1"></a>                             <span class="at">tss_file =</span><span class="st">&quot;F:/CAT/example/hg19_tss_standard.bed&quot;</span>)</span>
+<span id="cb18-3"><a href="using-deseq2-to-identify-differentail-ocr-two-samples.html#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(target)</span></code></pre></div>
+<pre><code>##   chrom     start       end  baseMean log2FoldChange     lfcSE       stat
+## 1  chr1 100009953 100010254 20.142897     -0.4939808 0.6575732 -0.7512181
+## 2  chr1 100012048 100012826 23.103692     -0.3060881 0.6464743 -0.4734730
+## 3  chr1 100017890 100018149  8.223809     -0.8358235 0.8052071 -1.0380231
+## 4  chr1 100023076 100023997 22.811175      0.2890909 0.6505642  0.4443696
+## 5  chr1  10002486  10002743  8.659492      1.0989500 0.7945523  1.3831059
+## 6  chr1  10002897  10003700 55.147809     -0.1827790 0.5806837 -0.3147652
+##      pvalue      padj  sig peak_center       TSS gene strand distance
+## 1 0.4525214 0.8669849 None   100010103  99929934    1      +   -80169
+## 2 0.6358758 0.9436658 None   100012437  99929934    1      +   -82503
+## 3 0.2992593 0.7424509 None   100018019  99929934    1      +   -88085
+## 4 0.6567754 0.9507410 None   100023536 100111499    1      +    87963
+## 5 0.1666324 0.5544505 None    10002614  10003465    1      -     -851
+## 6 0.7529400 0.9699603 None    10003298  10003465    1      -     -167</code></pre>
+</div>
+<div id="plotma" class="section level2 hasAnchor" number="6.2">
+<h2><span class="header-section-number">6.2</span> PlotMA<a href="using-deseq2-to-identify-differentail-ocr-two-samples.html#plotma" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="using-deseq2-to-identify-differentail-ocr-two-samples.html#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plotMA</span>(target)</span></code></pre></div>
+<pre><code>## Warning: Removed 21 rows containing missing values (`geom_point()`).</code></pre>
+<p><img src="bookdown-demo_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+</div>
+<div id="compare-the-three-samples-chromatin-accessibility-three-samples" class="section level2 hasAnchor" number="6.3">
+<h2><span class="header-section-number">6.3</span> Compare the three samples chromatin accessibility (Three samples)<a href="using-deseq2-to-identify-differentail-ocr-two-samples.html#compare-the-three-samples-chromatin-accessibility-three-samples" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="using-deseq2-to-identify-differentail-ocr-two-samples.html#cb22-1" aria-hidden="true" tabindex="-1"></a>quant_data <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">&quot;F:/CAT/example/ATAC_CPM_Norm_Data.tsv&quot;</span>,<span class="at">head=</span>T, <span class="at">row.names =</span> <span class="dv">1</span>)</span>
+<span id="cb22-2"><a href="using-deseq2-to-identify-differentail-ocr-two-samples.html#cb22-2" aria-hidden="true" tabindex="-1"></a>quant_data <span class="ot">&lt;-</span> quant_data[,<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>]</span>
+<span id="cb22-3"><a href="using-deseq2-to-identify-differentail-ocr-two-samples.html#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="fu">getTraids</span>(<span class="at">group_name=</span><span class="fu">c</span>(<span class="st">&quot;Bulk_B&quot;</span>,<span class="st">&quot;Mem_B&quot;</span>,<span class="st">&quot;Naive_B&quot;</span>), <span class="at">quant_df =</span> quant_data, <span class="at">return_matrix=</span>F)</span></code></pre></div>
+<pre><code>## Registered S3 methods overwritten by &#39;ggtern&#39;:
+##   method           from   
+##   grid.draw.ggplot ggplot2
+##   plot.ggplot      ggplot2
+##   print.ggplot     ggplot2</code></pre>
+<p><img src="bookdown-demo_files/figure-html/getTraids-1.png" width="672" /></p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="using-deseq2-to-identify-differentail-ocr-two-samples.html#cb24-1" aria-hidden="true" tabindex="-1"></a>traids_res <span class="ot">&lt;-</span> <span class="fu">getTraids</span>(<span class="at">group_name=</span><span class="fu">c</span>(<span class="st">&quot;Bulk_B&quot;</span>,<span class="st">&quot;Mem_B&quot;</span>,<span class="st">&quot;Naive_B&quot;</span>), <span class="at">quant_df =</span> quant_data, <span class="at">return_matrix=</span>T)</span>
+<span id="cb24-2"><a href="using-deseq2-to-identify-differentail-ocr-two-samples.html#cb24-2" aria-hidden="true" tabindex="-1"></a>ss <span class="ot">&lt;-</span> <span class="fu">getTraidsTargetGenes</span>(<span class="at">traids_data =</span> traids_res, <span class="at">tss_file =</span><span class="st">&quot;F:/CAT/example/hg19_tss_standard.bed&quot;</span>)</span>
+<span id="cb24-3"><a href="using-deseq2-to-identify-differentail-ocr-two-samples.html#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(ss)</span></code></pre></div>
+<pre><code>##   chrom Peak_center     Bulk_B      Mem_B    Naive_B    group Peak_start
+## 1  chr1    10002608 13.8856986 10.0789262 14.2993450 Balanced   10002479
+## 2  chr1    10003278 42.9063666 36.3064701 40.1604987 Balanced   10002882
+## 3  chr1    10010879 24.0408104 21.8499202 23.6924342 Balanced   10010375
+## 4  chr1   100151435  2.8567393  4.0018620  1.9159796 Balanced  100151309
+## 5  chr1   100165813  0.7423252  0.5227386  0.5916473 Balanced  100165700
+## 6  chr1   100170051  1.5425758  1.2980058  0.9026976 Balanced  100169976
+##    Peak_end       TSS            gene strand distance
+## 1  10002738  10003465 ENSG00000162441      -     -857
+## 2  10003675  10003465 ENSG00000162441      -     -187
+## 3  10011383  10003465 ENSG00000162441      -     7414
+## 4 100151561 100163798 ENSG00000223656      +    12363
+## 5 100165927 100163798 ENSG00000223656      +    -2015
+## 6 100170126 100163798 ENSG00000223656      +    -6253</code></pre>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="peak-overlap-analysis.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="tissue-specific-analysis.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/rstudio/bookdown-demo/edit/master/04-Differential_OCR_analysis.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["bookdown-demo.pdf", "bookdown-demo.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

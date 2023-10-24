@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 17 Session Information | cisDynet：an integrated platform for modeling gene-regulatory dynamics and networks</title>
+  <meta name="description" content="cis-regulatory chromatin dynamics and networks." />
+  <meta name="generator" content="bookdown 0.34 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 17 Session Information | cisDynet：an integrated platform for modeling gene-regulatory dynamics and networks" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="cis-regulatory chromatin dynamics and networks." />
+  <meta name="github-repo" content="rstudio/bookdown-demo" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 17 Session Information | cisDynet：an integrated platform for modeling gene-regulatory dynamics and networks" />
+  
+  <meta name="twitter:description" content="cis-regulatory chromatin dynamics and networks." />
+  
+
+<meta name="author" content="Tao Zhu" />
+
+
+<meta name="date" content="2023-08-24" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="other-utils.html"/>
+
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">cisDynet</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Primer</a></li>
+<li class="chapter" data-level="2" data-path="getting-started-with-cisdynet.html"><a href="getting-started-with-cisdynet.html"><i class="fa fa-check"></i><b>2</b> Getting Started with cisDynet</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="getting-started-with-cisdynet.html"><a href="getting-started-with-cisdynet.html#why-use-cisdynet"><i class="fa fa-check"></i><b>2.1</b> Why use cisDynet?</a></li>
+<li class="chapter" data-level="2.2" data-path="getting-started-with-cisdynet.html"><a href="getting-started-with-cisdynet.html#getting-set-up"><i class="fa fa-check"></i><b>2.2</b> Getting Set Up</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="snakemake-pipeline.html"><a href="snakemake-pipeline.html"><i class="fa fa-check"></i><b>3</b> Snakemake Pipeline</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="snakemake-pipeline.html"><a href="snakemake-pipeline.html#example-data"><i class="fa fa-check"></i><b>3.1</b> Example Data</a></li>
+<li class="chapter" data-level="3.2" data-path="snakemake-pipeline.html"><a href="snakemake-pipeline.html#config-file"><i class="fa fa-check"></i><b>3.2</b> Config File</a></li>
+<li class="chapter" data-level="3.3" data-path="snakemake-pipeline.html"><a href="snakemake-pipeline.html#blacklists"><i class="fa fa-check"></i><b>3.3</b> Blacklists</a></li>
+<li class="chapter" data-level="3.4" data-path="snakemake-pipeline.html"><a href="snakemake-pipeline.html#pipeline-output-folders"><i class="fa fa-check"></i><b>3.4</b> Pipeline Output Folders</a></li>
+<li class="chapter" data-level="3.5" data-path="snakemake-pipeline.html"><a href="snakemake-pipeline.html#report-explanation"><i class="fa fa-check"></i><b>3.5</b> Report Explanation</a></li>
+<li class="chapter" data-level="3.6" data-path="snakemake-pipeline.html"><a href="snakemake-pipeline.html#troubleshooting"><i class="fa fa-check"></i><b>3.6</b> Troubleshooting</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="quality-control-plot.html"><a href="quality-control-plot.html"><i class="fa fa-check"></i><b>4</b> Quality Control Plot</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="quality-control-plot.html"><a href="quality-control-plot.html#plotfragments"><i class="fa fa-check"></i><b>4.1</b> plotFragments</a></li>
+<li class="chapter" data-level="4.2" data-path="quality-control-plot.html"><a href="quality-control-plot.html#plottss"><i class="fa fa-check"></i><b>4.2</b> plotTSS</a></li>
+<li class="chapter" data-level="4.3" data-path="quality-control-plot.html"><a href="quality-control-plot.html#quantification"><i class="fa fa-check"></i><b>4.3</b> Quantification</a></li>
+<li class="chapter" data-level="4.4" data-path="quality-control-plot.html"><a href="quality-control-plot.html#pca"><i class="fa fa-check"></i><b>4.4</b> PCA</a></li>
+<li class="chapter" data-level="4.5" data-path="quality-control-plot.html"><a href="quality-control-plot.html#dendrogram"><i class="fa fa-check"></i><b>4.5</b> Dendrogram</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="peak-overlap-analysis.html"><a href="peak-overlap-analysis.html"><i class="fa fa-check"></i><b>5</b> Peak Overlap Analysis</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="peak-overlap-analysis.html"><a href="peak-overlap-analysis.html#plotvenn2---6-samples"><i class="fa fa-check"></i><b>5.1</b> PlotVenn(2 - 6 samples)</a></li>
+<li class="chapter" data-level="5.2" data-path="peak-overlap-analysis.html"><a href="peak-overlap-analysis.html#plotupset"><i class="fa fa-check"></i><b>5.2</b> plotUpSet</a></li>
+<li class="chapter" data-level="5.3" data-path="peak-overlap-analysis.html"><a href="peak-overlap-analysis.html#pairwise-module-examples"><i class="fa fa-check"></i><b>5.3</b> Pairwise module examples</a></li>
+<li class="chapter" data-level="5.4" data-path="peak-overlap-analysis.html"><a href="peak-overlap-analysis.html#flower-plot"><i class="fa fa-check"></i><b>5.4</b> Flower plot</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="peak-annotaion.html"><a href="peak-annotaion.html"><i class="fa fa-check"></i><b>6</b> Peak annotaion</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="peak-annotaion.html"><a href="peak-annotaion.html#chipseeker-annotation"><i class="fa fa-check"></i><b>6.1</b> ChIPSeeker annotation</a></li>
+<li class="chapter" data-level="6.2" data-path="peak-annotaion.html"><a href="peak-annotaion.html#the-distance-of-peak-summit-to-tss"><i class="fa fa-check"></i><b>6.2</b> The distance of Peak summit to TSS</a></li>
+<li class="chapter" data-level="6.3" data-path="peak-annotaion.html"><a href="peak-annotaion.html#proximal-distal-intragenic-annotaion"><i class="fa fa-check"></i><b>6.3</b> Proximal / Distal / Intragenic Annotaion</a></li>
+<li class="chapter" data-level="6.4" data-path="peak-annotaion.html"><a href="peak-annotaion.html#annotation-for-merged-peaks"><i class="fa fa-check"></i><b>6.4</b> Annotation for merged peaks</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="differential-ocr-analysis.html"><a href="differential-ocr-analysis.html"><i class="fa fa-check"></i><b>7</b> Differential OCR analysis</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="differential-ocr-analysis.html"><a href="differential-ocr-analysis.html#using-deseq2-to-identify-differentail-ocr-two-groups"><i class="fa fa-check"></i><b>7.1</b> Using DEseq2 to identify differentail OCR (Two groups)</a></li>
+<li class="chapter" data-level="7.2" data-path="differential-ocr-analysis.html"><a href="differential-ocr-analysis.html#get-the-differential-peaks-target-genes"><i class="fa fa-check"></i><b>7.2</b> Get the differential peaks target genes</a></li>
+<li class="chapter" data-level="7.3" data-path="differential-ocr-analysis.html"><a href="differential-ocr-analysis.html#plotma"><i class="fa fa-check"></i><b>7.3</b> PlotMA</a></li>
+<li class="chapter" data-level="7.4" data-path="differential-ocr-analysis.html"><a href="differential-ocr-analysis.html#compare-the-three-samples-chromatin-accessibility-three-samples"><i class="fa fa-check"></i><b>7.4</b> Compare the three samples chromatin accessibility (Three samples)</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="tissuesample-specific-analysis.html"><a href="tissuesample-specific-analysis.html"><i class="fa fa-check"></i><b>8</b> Tissue(Sample) Specific Analysis</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="tissuesample-specific-analysis.html"><a href="tissuesample-specific-analysis.html#calaluate-the-spm-matrix"><i class="fa fa-check"></i><b>8.1</b> Calaluate the SPM matrix</a></li>
+<li class="chapter" data-level="8.2" data-path="tissuesample-specific-analysis.html"><a href="tissuesample-specific-analysis.html#select-the-specific-peak-with-your-interests"><i class="fa fa-check"></i><b>8.2</b> Select the specific peak with your interests</a></li>
+<li class="chapter" data-level="8.3" data-path="tissuesample-specific-analysis.html"><a href="tissuesample-specific-analysis.html#select-the-specifc-peaks-with-jsd-score"><i class="fa fa-check"></i><b>8.3</b> Select the specifc peaks with JSD score</a></li>
+<li class="chapter" data-level="8.4" data-path="tissuesample-specific-analysis.html"><a href="tissuesample-specific-analysis.html#get-the-top-n-specific-peaks-in-every-samples-tissues"><i class="fa fa-check"></i><b>8.4</b> Get the Top N specific peaks in every Samples / Tissues</a></li>
+<li class="chapter" data-level="8.5" data-path="tissuesample-specific-analysis.html"><a href="tissuesample-specific-analysis.html#get-the-optimal-cluster-number"><i class="fa fa-check"></i><b>8.5</b> Get the optimal cluster number</a></li>
+<li class="chapter" data-level="8.6" data-path="tissuesample-specific-analysis.html"><a href="tissuesample-specific-analysis.html#get-the-cluster-target-genes"><i class="fa fa-check"></i><b>8.6</b> Get the cluster target genes</a></li>
+<li class="chapter" data-level="8.7" data-path="tissuesample-specific-analysis.html"><a href="tissuesample-specific-analysis.html#go-enrichment"><i class="fa fa-check"></i><b>8.7</b> GO Enrichment</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="time-course-data.html"><a href="time-course-data.html"><i class="fa fa-check"></i><b>9</b> Time Course Data</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="time-course-data.html"><a href="time-course-data.html#fitting-time-with-atac-seq"><i class="fa fa-check"></i><b>9.1</b> Fitting time with ATAC-seq</a></li>
+<li class="chapter" data-level="9.2" data-path="time-course-data.html"><a href="time-course-data.html#integration-with-rna-seq"><i class="fa fa-check"></i><b>9.2</b> Integration with RNA-seq</a></li>
+<li class="chapter" data-level="9.3" data-path="time-course-data.html"><a href="time-course-data.html#get-fitting-time-genes"><i class="fa fa-check"></i><b>9.3</b> Get fitting time genes</a></li>
+<li class="chapter" data-level="9.4" data-path="time-course-data.html"><a href="time-course-data.html#integration-with-atac-rna-seq"><i class="fa fa-check"></i><b>9.4</b> Integration with ATAC / RNA-seq</a></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="motif-enrichment.html"><a href="motif-enrichment.html"><i class="fa fa-check"></i><b>10</b> Motif Enrichment</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="motif-enrichment.html"><a href="motif-enrichment.html#chromvar"><i class="fa fa-check"></i><b>10.1</b> ChromVAR</a></li>
+</ul></li>
+<li class="chapter" data-level="11" data-path="footprint-analysis.html"><a href="footprint-analysis.html"><i class="fa fa-check"></i><b>11</b> Footprint Analysis</a>
+<ul>
+<li class="chapter" data-level="11.1" data-path="footprint-analysis.html"><a href="footprint-analysis.html#get-footprint-score"><i class="fa fa-check"></i><b>11.1</b> Get footprint score</a></li>
+<li class="chapter" data-level="11.2" data-path="footprint-analysis.html"><a href="footprint-analysis.html#plot-footprint-score"><i class="fa fa-check"></i><b>11.2</b> Plot footprint score</a></li>
+<li class="chapter" data-level="11.3" data-path="footprint-analysis.html"><a href="footprint-analysis.html#compare-footprints"><i class="fa fa-check"></i><b>11.3</b> Compare Footprints</a></li>
+<li class="chapter" data-level="11.4" data-path="footprint-analysis.html"><a href="footprint-analysis.html#get-differential-footprints"><i class="fa fa-check"></i><b>11.4</b> Get Differential Footprints</a></li>
+<li class="chapter" data-level="11.5" data-path="footprint-analysis.html"><a href="footprint-analysis.html#getmotif2gene"><i class="fa fa-check"></i><b>11.5</b> getMotif2Gene</a></li>
+<li class="chapter" data-level="11.6" data-path="footprint-analysis.html"><a href="footprint-analysis.html#integration-with-rna-seq-1"><i class="fa fa-check"></i><b>11.6</b> Integration with RNA-seq</a></li>
+</ul></li>
+<li class="chapter" data-level="12" data-path="co-accessibility.html"><a href="co-accessibility.html"><i class="fa fa-check"></i><b>12</b> Co-accessibility</a>
+<ul>
+<li class="chapter" data-level="12.1" data-path="co-accessibility.html"><a href="co-accessibility.html#co-accessibility-calaulation"><i class="fa fa-check"></i><b>12.1</b> Co-accessibility calaulation</a></li>
+<li class="chapter" data-level="12.2" data-path="co-accessibility.html"><a href="co-accessibility.html#plotting-browser-tracks-of-co-accessibility"><i class="fa fa-check"></i><b>12.2</b> Plotting browser tracks of Co-accessibility</a></li>
+</ul></li>
+<li class="chapter" data-level="13" data-path="linking-peak-to-gene.html"><a href="linking-peak-to-gene.html"><i class="fa fa-check"></i><b>13</b> Linking Peak to Gene</a>
+<ul>
+<li class="chapter" data-level="13.1" data-path="linking-peak-to-gene.html"><a href="linking-peak-to-gene.html#get-the-peak-target-genes"><i class="fa fa-check"></i><b>13.1</b> Get the peak target genes</a></li>
+<li class="chapter" data-level="13.2" data-path="linking-peak-to-gene.html"><a href="linking-peak-to-gene.html#plot-all-the-significant-peak2gene-links"><i class="fa fa-check"></i><b>13.2</b> Plot all the significant peak2gene links</a></li>
+<li class="chapter" data-level="13.3" data-path="linking-peak-to-gene.html"><a href="linking-peak-to-gene.html#link-ocr-to-genes"><i class="fa fa-check"></i><b>13.3</b> Link OCR to genes</a></li>
+<li class="chapter" data-level="13.4" data-path="linking-peak-to-gene.html"><a href="linking-peak-to-gene.html#plotp2gtracks"><i class="fa fa-check"></i><b>13.4</b> plotP2GTracks</a></li>
+</ul></li>
+<li class="chapter" data-level="14" data-path="building-regulatory-network.html"><a href="building-regulatory-network.html"><i class="fa fa-check"></i><b>14</b> Building regulatory network</a>
+<ul>
+<li class="chapter" data-level="14.1" data-path="building-regulatory-network.html"><a href="building-regulatory-network.html#motif2gene"><i class="fa fa-check"></i><b>14.1</b> Motif2Gene</a></li>
+<li class="chapter" data-level="14.2" data-path="building-regulatory-network.html"><a href="building-regulatory-network.html#building-regulatory-network-1"><i class="fa fa-check"></i><b>14.2</b> Building regulatory network</a></li>
+</ul></li>
+<li class="chapter" data-level="15" data-path="gwas-trait-snps-enrichment.html"><a href="gwas-trait-snps-enrichment.html"><i class="fa fa-check"></i><b>15</b> GWAS Trait SNPs Enrichment</a>
+<ul>
+<li class="chapter" data-level="15.1" data-path="gwas-trait-snps-enrichment.html"><a href="gwas-trait-snps-enrichment.html#workflows"><i class="fa fa-check"></i><b>15.1</b> Workflows</a></li>
+<li class="chapter" data-level="15.2" data-path="gwas-trait-snps-enrichment.html"><a href="gwas-trait-snps-enrichment.html#preprocessing"><i class="fa fa-check"></i><b>15.2</b> Preprocessing</a></li>
+<li class="chapter" data-level="15.3" data-path="gwas-trait-snps-enrichment.html"><a href="gwas-trait-snps-enrichment.html#do-enrichment"><i class="fa fa-check"></i><b>15.3</b> Do Enrichment</a></li>
+<li class="chapter" data-level="15.4" data-path="gwas-trait-snps-enrichment.html"><a href="gwas-trait-snps-enrichment.html#plotting"><i class="fa fa-check"></i><b>15.4</b> Plotting</a></li>
+</ul></li>
+<li class="chapter" data-level="16" data-path="other-utils.html"><a href="other-utils.html"><i class="fa fa-check"></i><b>16</b> Other Utils</a>
+<ul>
+<li class="chapter" data-level="16.1" data-path="other-utils.html"><a href="other-utils.html#super-enhancer"><i class="fa fa-check"></i><b>16.1</b> Super Enhancer</a></li>
+<li class="chapter" data-level="16.2" data-path="other-utils.html"><a href="other-utils.html#peak-fisher-test"><i class="fa fa-check"></i><b>16.2</b> Peak Fisher Test</a></li>
+<li class="chapter" data-level="16.3" data-path="other-utils.html"><a href="other-utils.html#snp2gene"><i class="fa fa-check"></i><b>16.3</b> SNP2Gene</a></li>
+</ul></li>
+<li class="chapter" data-level="17" data-path="session-information.html"><a href="session-information.html"><i class="fa fa-check"></i><b>17</b> Session Information</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">cisDynet：an integrated platform for modeling gene-regulatory dynamics and networks</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="session-information" class="section level1 hasAnchor" number="17">
+<h1><span class="header-section-number">Chapter 17</span> Session Information<a href="session-information.html#session-information" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="session-information.html#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">Sys.Date</span>()</span></code></pre></div>
+<pre><code>## [1] &quot;2023-10-23&quot;</code></pre>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="session-information.html#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sessionInfo</span>()</span></code></pre></div>
+<pre><code>## R version 4.3.0 (2023-04-21 ucrt)
+## Platform: x86_64-w64-mingw32/x64 (64-bit)
+## Running under: Windows 11 x64 (build 22621)
+## 
+## Matrix products: default
+## 
+## 
+## locale:
+## [1] LC_COLLATE=Chinese (Simplified)_China.utf8 
+## [2] LC_CTYPE=Chinese (Simplified)_China.utf8   
+## [3] LC_MONETARY=Chinese (Simplified)_China.utf8
+## [4] LC_NUMERIC=C                               
+## [5] LC_TIME=Chinese (Simplified)_China.utf8    
+## 
+## time zone: Asia/Shanghai
+## tzcode source: internal
+## 
+## attached base packages:
+## [1] stats     graphics  grDevices utils     datasets  methods   base     
+## 
+## other attached packages:
+## [1] cisDynet_1.0.0
+## 
+## loaded via a namespace (and not attached):
+##  [1] SummarizedExperiment_1.30.2 gtable_0.3.3               
+##  [3] rjson_0.2.21                xfun_0.39                  
+##  [5] bslib_0.5.0                 ggplot2_3.4.2              
+##  [7] corrplot_0.92               lattice_0.21-8             
+##  [9] Biobase_2.60.0              paletteer_1.5.0            
+## [11] tzdb_0.4.0                  vctrs_0.6.3                
+## [13] tools_4.3.0                 bitops_1.0-7               
+## [15] generics_0.1.3              parallel_4.3.0             
+## [17] stats4_4.3.0                tibble_3.2.1               
+## [19] fansi_1.0.4                 pkgconfig_2.0.3            
+## [21] Matrix_1.6-0                tidyverse_2.0.0            
+## [23] S4Vectors_0.38.1            lifecycle_1.0.3            
+## [25] GenomeInfoDbData_1.2.10     compiler_4.3.0             
+## [27] stringr_1.5.0               Rsamtools_2.16.0           
+## [29] Biostrings_2.68.1           munsell_0.5.0              
+## [31] codetools_0.2-19            GenomeInfoDb_1.36.1        
+## [33] htmltools_0.5.5             sass_0.4.7                 
+## [35] RCurl_1.98-1.12             yaml_2.3.7                 
+## [37] venn_1.11                   crayon_1.5.2               
+## [39] pillar_1.9.0                jquerylib_0.1.4            
+## [41] tidyr_1.3.0                 admisc_0.33                
+## [43] BiocParallel_1.34.2         DelayedArray_0.26.6        
+## [45] cachem_1.0.8                tidyselect_1.2.0           
+## [47] digest_0.6.33               stringi_1.7.12             
+## [49] dplyr_1.1.2                 purrr_1.0.1                
+## [51] valr_0.6.8                  rematch2_2.1.2             
+## [53] restfulr_0.0.15             bookdown_0.34              
+## [55] cowplot_1.1.1               fastmap_1.1.1              
+## [57] grid_4.3.0                  colorspace_2.1-0           
+## [59] cli_3.6.1                   magrittr_2.0.3             
+## [61] S4Arrays_1.0.4              XML_3.99-0.14              
+## [63] utf8_1.2.3                  broom_1.0.5                
+## [65] readr_2.1.4                 scales_1.2.1               
+## [67] backports_1.4.1             ggfortify_0.4.16           
+## [69] rmarkdown_2.23              XVector_0.40.0             
+## [71] matrixStats_1.0.0           gridExtra_2.3              
+## [73] hms_1.1.3                   evaluate_0.21              
+## [75] knitr_1.43                  UpSetR_1.4.0               
+## [77] BiocIO_1.10.0               GenomicRanges_1.52.0       
+## [79] IRanges_2.34.1              rtracklayer_1.60.0         
+## [81] rlang_1.1.1                 Rcpp_1.0.11                
+## [83] glue_1.6.2                  BiocGenerics_0.46.0        
+## [85] rstudioapi_0.15.0           jsonlite_1.8.7             
+## [87] R6_2.5.1                    plyr_1.8.8                 
+## [89] MatrixGenerics_1.12.2       GenomicAlignments_1.36.0   
+## [91] zlibbioc_1.46.0</code></pre>
+<p><strong>Github</strong>: <strong><a href="https://github.com/tzhu-bio/cisDynet" class="uri">https://github.com/tzhu-bio/cisDynet</a></strong></p>
+<p>Any questions you have can be asked in the github issue.</p>
+
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="other-utils.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/rstudio/bookdown-demo/edit/master/15-Session_Information.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["bookdown-demo.pdf", "bookdown-demo.epub"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>
