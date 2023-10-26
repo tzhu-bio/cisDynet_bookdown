@@ -525,7 +525,7 @@ software:
 </div>
 <div id="blacklists" class="section level2 hasAnchor" number="3.3">
 <h2><span class="header-section-number">3.3</span> Blacklists<a href="snakemake-pipeline.html#blacklists" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>In the context of epigenomic analysis, “blacklisted regions” typically refer to specific areas on the genome that often include repetitive sequences, transposons, genes encoding non-epigenetic modifying enzymes, etc. These regions can potentially interfere with the accuracy and interpretability of epigenomic studies. In mammals, such as humans and mice, the ENCODE programme has obtained specific <a href="https://github.com/Boyle-Lab/Blacklist">blacklists</a> by inferring and hand-correcting. This same problem exists in plant epigenomics, but there is no specific blacklist for researchers to use. Here we used the <a href="https://academic.oup.com/plcell/article/34/12/4795/6705244#383964580">Greenscreen</a> software here, combined with data collected by our <a href="https://www.nature.com/articles/s41467-022-30770-1">ChIP-Hub</a>, to infer genome blacklists for Arabidopsis, rice, maize, tomato, and soybean.</p>
+<p>In the context of epigenomic analysis, “blacklisted regions” typically refer to specific areas on the genome that often include repetitive sequences, transposons, genes encoding non-epigenetic modifying enzymes, etc. These regions can potentially interfere with the accuracy and interpretability of epigenomic studies. In mammals, such as humans and mice, the ENCODE programme has obtained specific <a href="https://github.com/Boyle-Lab/Blacklist">blacklists</a> by inferring and hand-correcting. This same problem exists in plant epigenomics, but there is no specific blacklist for researchers to use. Here we used the <a href="https://academic.oup.com/plcell/article/34/12/4795/6705244#383964580">greenscreen</a> software here, combined with data collected by our <a href="https://www.nature.com/articles/s41467-022-30770-1">ChIP-Hub</a>, to infer genome blacklists for Arabidopsis, rice, maize, tomato, and soybean.</p>
 <p>The corresponding blacklists can be downloaded via the links below.</p>
 <table style="width:100%;">
 <colgroup>
@@ -597,7 +597,7 @@ software:
 <p><em>signal</em>: The bigwig file normalized by CPM and RPKM methods.</p>
 <p><em>q30</em>: The bam file after removing the low mapping scores and organelle reads.</p>
 <p><em>peaks</em>: The narrowpeak files obtained by MACS2.</p>
-<p><em>multiqc</em>: The CAT pipeline report.</p>
+<p><em>multiqc</em>: The cisDynet pipeline report.</p>
 <p><em>cut_sites</em>: The Tn5 cuts files after shifting the reads.</p>
 <p><em>ATACCorrect</em>: Bias correction of ATAC-seq reads in open chromatin using <a href="https://www.nature.com/articles/s41467-020-18035-1">TOBIAS</a></p>
 <p><em>BINDetect</em>: Estimation of differentially bound motifs based on scores, sequence and motifs using TOBIAS.</p>
@@ -619,11 +619,11 @@ software:
 <div id="troubleshooting" class="section level2 hasAnchor" number="3.6">
 <h2><span class="header-section-number">3.6</span> Troubleshooting<a href="snakemake-pipeline.html#troubleshooting" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <ol style="list-style-type: decimal">
-<li><strong>Low mapping rate</strong> (usually &lt; 80%): It is possible that there was microbial contamination during the experiment.</li>
-<li><strong>High organelle mapping rate</strong> (usually &gt; 20%): A pure suspension of nuclei was not obtained and more washes are recommended. Aspirate all supernatant (which contains mitochondria) as much as possible before performing the transposition reaction. For plant cells, it is highly recommended to use flow cytometry to sort nuclei to reduce contaminants such as organelles.</li>
-<li><strong>High duplication rate</strong> (usually &gt; 30%): The library complexity is not enough. The number of cells may not be sufficient. The concentration of DNA at the start of PCR is too low or the number of amplification cycles of PCR is too high. It is recommended to optimise the Tn5 reaction system or reduce the number of cycles.</li>
-<li><strong>Low TSS enrichment scores</strong> (usually &lt; 5): The sample may have problems, such as containing dead cells. The suspension contains floating DNA fragments. Prior to the Tn5 transposition reaction, the nuclei were severely broken.</li>
-<li><strong>Low FRiP</strong> (usually &lt; 15%): If the experiment is fine, check that the sequencing depth is sufficient.</li>
+<li><strong>Low mapping rate</strong> (usually &lt; 80%): This may indicate the possibility of microbial contamination during the experiment.</li>
+<li><strong>High organelle mapping rate</strong> (usually &gt; 20%): It suggests that a pure suspension of nuclei was not successfully obtained, and additional washes are recommended. It is advised to aspirate as much supernatant (which contains mitochondria) as possible before proceeding with the transposition reaction. In the case of plant cells, the use of flow cytometry for nuclei sorting is highly recommended to minimize organelle contaminants.</li>
+<li><strong>High duplication rate</strong> (usually &gt; 30%): This could result from insufficient library complexity, an inadequate number of cells, a low DNA concentration at the start of PCR, or an excessive number of PCR amplification cycles. It is recommended to optimize the Tn5 reaction system or reduce the number of amplification cycles.</li>
+<li><strong>Low TSS enrichment scores</strong> (usually &lt; 5): This might indicate issues with the sample, such as the presence of dead cells, floating DNA fragments in the suspension, or severe nucleus damage prior to the Tn5 transposition reaction.</li>
+<li><strong>Low FRiP (usually &lt; 15%)</strong>: If the experiment is fine, it is essential to verify that the sequencing depth is sufficient.</li>
 </ol>
 
 </div>
